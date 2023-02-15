@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 import { useProvider } from "wagmi";
 import { HARD_CAP, CLI_PRICE } from "@/constants";
 import { getRemainCil } from "@/utils/app";
+import GradientSVG from "./gradientSVG";
 
 const PresaleInfo = () => {
   const provider = useProvider();
@@ -16,30 +19,27 @@ const PresaleInfo = () => {
   };
 
   const percentage = () => {
-    return ((sold * 100) / HARD_CAP).toFixed(2);
+    return (sold * 100) / HARD_CAP;
   };
 
   return (
     <div className="flex flex-col w-full items-center space-y-2">
-      <div className="w-full rounded-full">
-        <div className="flex justify-between mb-1">
-          <span className="text-base font-medium text-blue-700 dark:text-white"></span>
-          <span className="text-sm font-medium text-blue-700 dark:text-white">
-            Hard Cap: {hardCap()}
-          </span>
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-          <div
-            className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-            style={{ width: `${percentage()}%` }}
-          >
-            {percentage()}%
-          </div>
-        </div>
-        <div className="flex justify-between mb-1">
-          <span className="text-base font-medium text-blue-700 dark:text-white"></span>
-          <span className="text-sm font-medium text-blue-700 dark:text-white">
-            {sold} / {HARD_CAP} CIL
+      <div className="h-96 w-96 relative">
+        <GradientSVG />
+        <CircularProgressbar
+          value={percentage()}
+          strokeWidth={4}
+          styles={{
+            path: { stroke: `url(#hello)`, height: "100%" },
+            trail: {
+              stroke: "#141a2c",
+            },
+          }}
+        />
+        <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center p-4">
+          <span className="text-5xl font-medium text-white pb-2">{sold}</span>
+          <span className="text-md font-medium text-slate-500">
+            / {HARD_CAP} CIL
           </span>
         </div>
       </div>

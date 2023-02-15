@@ -13,8 +13,9 @@ module.exports = {
       },
       textColor: {
         primary: "#fff",
+        blue: "rgb(59 130 246/var(--tw-bg-opacity))",
       },
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [require("flowbite/plugin"), require("daisyui")],
 };
