@@ -10,8 +10,9 @@ import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { mainnet, goerli } from "wagmi/chains";
 import { Navbar } from "@/components";
 import MainProvider from "@/contexts/MainProvider";
+import { NETWORK } from "@/constants";
 
-const chains = [goerli, mainnet];
+const chains = [goerli];
 
 // Wagmi client
 const { provider } = configureChains(chains, [

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useProvider } from "wagmi";
 import { HARD_CAP, CLI_PRICE } from "@/constants";
-import { getRemainCil } from "@/utils";
+import { getRemainCil } from "@/utils/app";
 
 const PresaleInfo = () => {
   const provider = useProvider();

@@ -1,4 +1,5 @@
-import { Token } from "./types";
+import { Token } from "@/types";
+export { default as WHITELISTS } from "./whitelists";
 
 export const START_TIME = 1676095200;
 export const CLOSE_TIME = 1677304800;

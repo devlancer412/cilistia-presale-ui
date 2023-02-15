@@ -1,5 +1,12 @@
-import { createContext, FC, ReactNode, useEffect, useState } from "react";
-import { PresaleStatus, Token } from "@/types";
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
+import { PresaleStatus } from "@/types";
 import { START_TIME, CLOSE_TIME } from "@/constants";
 
 interface MainContextType {
@@ -20,7 +27,8 @@ const MainProvider: FC<Props> = ({ children }) => {
     PresaleStatus.NOT_STARTED
   );
   const [remainingSeconds, setRemainingSeconds] = useState<number>(0);
-  const [timer, setTimer] = useState<NodeJS.Timer | undefined>();
+  const timer = useRef<NodeJS.Timer | undefined>(undefined);
+  // const [timer, setTimer] = useState<NodeJS.Timer | undefined>();
 
   useEffect(() => {
     const currentTime = Math.floor(Date.now() / 1000);
@@ -28,29 +36,19 @@ const MainProvider: FC<Props> = ({ children }) => {
     if (currentTime < START_TIME) {
       setStatus(PresaleStatus.NOT_STARTED);
       setRemainingSeconds(START_TIME - currentTime);
-      setTimer(
-        setInterval(() => {
-          checkStatus();
-        }, 200)
-      );
+      timer.current = setInterval(() => {
+        checkStatus();
+      }, 200);
     } else if (currentTime < CLOSE_TIME) {
       setStatus(PresaleStatus.OPEN);
       setRemainingSeconds(CLOSE_TIME - currentTime);
-      setTimer(
-        setInterval(() => {
-          checkStatus();
-        }, 200)
-      );
+      timer.current = setInterval(() => {
+        checkStatus();
+      }, 200);
     } else {
       setStatus(PresaleStatus.CLOSED);
     }
   }, []);
-
-  // useEffect(() => {
-  //   if (address) {
-  //     getWhitelistStatus(address).then(setWhielisted);
-  //   }
-  // }, [address]);
 
   const checkStatus = () => {
     const currentTime = Math.floor(Date.now() / 1000);
@@ -63,8 +61,11 @@ const MainProvider: FC<Props> = ({ children }) => {
       setRemainingSeconds(CLOSE_TIME - currentTime);
     } else {
       setRemainingSeconds(0);
-      clearInterval(timer);
-      setTimer(undefined);
+      if (timer.current) {
+        clearInterval(timer.current);
+        timer.current = undefined;
+      }
+
       setStatus(PresaleStatus.CLOSED);
     }
   };
