@@ -156,7 +156,7 @@ const Buy = () => {
   } else {
     return (
       <div className="flex flex-col w-full items-center space-y-2">
-        <div>Not whitelisted</div>
+        <div>You are not whitelisted.</div>
       </div>
     );
   }
