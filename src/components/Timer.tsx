@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import useMain from "@/hooks/useMain";
+import usePresale from "@/hooks/usePresale";
 import { PresaleStatus } from "@/types";
 
 const Timer = () => {
-  const { status, remainingSeconds } = useMain();
+  const { status, remainingSeconds } = usePresale();
   const [timeInfo, setTimeInfo] = useState("00:00:00:00");
 
   const title = () => {

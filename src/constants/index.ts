@@ -50,3 +50,8 @@ export const PRESALE_ADDRESS: Record<number, string> = {
   5: "0xc9EEE0ba55c3035EB0a7a687c8fAB0E6e283a9F7",
   1: "",
 };
+
+export const PROVIDERS: Record<number, string> = {
+  5: "https://rpc.ankr.com/eth_goerli",
+  1: "https://rpc.ankr.com/eth",
+};

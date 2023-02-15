@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAccount, useSigner } from "wagmi";
 import { BigNumber, utils } from "ethers";
-import useMain from "@/hooks/useMain";
+import usePresale from "@/hooks/usePresale";
 import { PresaleStatus, Token } from "@/types";
 import { TOKENS, NETWORK } from "@/constants";
 import {
@@ -15,7 +15,7 @@ const Buy = () => {
   const { address } = useAccount();
   const { data: signer } = useSigner();
 
-  const { status } = useMain();
+  const { status } = usePresale();
   const [whitelisted, setWhitelisted] = useState(false);
   const [amount, setAmount] = useState("");
   const [selectedToken, setSelectedToken] = useState<Token>(TOKENS[NETWORK][0]);

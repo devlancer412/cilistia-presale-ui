@@ -9,26 +9,25 @@ import {
 import { PresaleStatus } from "@/types";
 import { START_TIME, CLOSE_TIME } from "@/constants";
 
-interface MainContextType {
+interface PresaleContextType {
   status: PresaleStatus;
   remainingSeconds: number;
 }
 
-export const MainContext = createContext<MainContextType>(
-  {} as MainContextType
+export const PresaleContext = createContext<PresaleContextType>(
+  {} as PresaleContextType
 );
 
 type Props = {
   children: ReactNode;
 };
 
-const MainProvider: FC<Props> = ({ children }) => {
+const PresaleProvider: FC<Props> = ({ children }) => {
   const [status, setStatus] = useState<PresaleStatus>(
     PresaleStatus.NOT_STARTED
   );
   const [remainingSeconds, setRemainingSeconds] = useState<number>(0);
   const timer = useRef<NodeJS.Timer | undefined>(undefined);
-  // const [timer, setTimer] = useState<NodeJS.Timer | undefined>();
 
   useEffect(() => {
     const currentTime = Math.floor(Date.now() / 1000);
@@ -71,10 +70,10 @@ const MainProvider: FC<Props> = ({ children }) => {
   };
 
   return (
-    <MainContext.Provider value={{ status, remainingSeconds }}>
+    <PresaleContext.Provider value={{ status, remainingSeconds }}>
       {children}
-    </MainContext.Provider>
+    </PresaleContext.Provider>
   );
 };
 
-export default MainProvider;
+export default PresaleProvider;
