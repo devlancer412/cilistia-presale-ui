@@ -9,9 +9,10 @@ import { Web3Modal } from "@web3modal/react";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { mainnet, goerli } from "wagmi/chains";
 import { Navbar } from "@/components";
-import MainProvider from "@/contexts/MainProvider";
+import PresaleProvider from "@/contexts/PresaleProvider";
+import { NETWORK } from "@/constants";
 
-const chains = [goerli, mainnet];
+const chains = [goerli];
 
 // Wagmi client
 const { provider } = configureChains(chains, [
@@ -35,10 +36,12 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <WagmiConfig client={wagmiClient}>
-        <MainProvider>
-          <Navbar />
-          <Component {...pageProps} />
-        </MainProvider>
+        <PresaleProvider>
+          <main className="bg-primary flex flex-col h-screen w-screen text-primary">
+            <Navbar />
+            <Component {...pageProps} />
+          </main>
+        </PresaleProvider>
       </WagmiConfig>
 
       <Web3Modal

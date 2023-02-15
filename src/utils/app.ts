@@ -1,5 +1,11 @@
-import { Signer, Provider } from "@wagmi/core";
-import { Contract, utils, constants } from "ethers";
+import {
+  Contract,
+  utils,
+  constants,
+  BigNumber,
+  Signer,
+  providers,
+} from "ethers";
 import { SignatureRes, Token } from "@/types";
 import { NETWORK, PRESALE_ADDRESS, CIL_TOKEN } from "@/constants";
 import PRESALE_ABI from "@/abis/Presale.json";
@@ -43,33 +49,36 @@ export const purchase = async (
     return;
   }
 
-  const tokenContract = new Contract(token.address, ERC20_ABI, signer);
-
-  const presaleContract = new Contract(
-    PRESALE_ADDRESS[NETWORK],
-    PRESALE_ABI,
-    signer
-  );
-
-  const allowance = await tokenContract.allowance(
-    userAddr,
-    presaleContract.address
-  );
-
-  if (allowance.lt(amountBN)) {
-    await tokenContract.approve(presaleContract.address, constants.MaxUint256);
-  }
+  const presaleContract = getPresaleContract(signer);
 
   const sign = utils.splitSignature(signatureRes.signature!);
 
-  await presaleContract.buy(amountBN, token.symbol, {
+  return presaleContract.buy(amountBN, token.symbol, {
     r: sign.r,
     s: sign.s,
     v: sign.v,
   });
 };
 
-export const getRemainCil = async (provider: Provider): Promise<number> => {
+export const approve = (token: Token, signer: Signer) => {
+  const tokenContract = new Contract(token.address, ERC20_ABI, signer);
+
+  return tokenContract.approve(PRESALE_ADDRESS[NETWORK], constants.MaxUint256);
+};
+
+export const getAllowance = async (
+  token: Token,
+  address: string,
+  signer: Signer
+): Promise<BigNumber> => {
+  const tokenContract = new Contract(token.address, ERC20_ABI, signer);
+
+  return tokenContract.allowance(address, PRESALE_ADDRESS[NETWORK]);
+};
+
+export const getRemainCil = async (
+  provider: providers.BaseProvider
+): Promise<number> => {
   const cilToken = CIL_TOKEN[NETWORK];
   const tokenContract = new Contract(
     CIL_TOKEN[NETWORK].address,
@@ -79,4 +88,16 @@ export const getRemainCil = async (provider: Provider): Promise<number> => {
 
   const balance = await tokenContract.balanceOf(PRESALE_ADDRESS[NETWORK]);
   return Number(utils.formatUnits(balance, cilToken.decimals));
+};
+
+export const getPresaleContract = (
+  provider: Signer | providers.BaseProvider
+) => {
+  const presaleContract = new Contract(
+    PRESALE_ADDRESS[NETWORK],
+    PRESALE_ABI,
+    provider
+  );
+
+  return presaleContract;
 };

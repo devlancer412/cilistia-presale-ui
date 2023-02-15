@@ -1,6 +1,5 @@
 import { utils, Wallet } from "ethers";
-import { NETWORK } from "@/constants";
-import WHITELISTS from "./whitelists";
+import { NETWORK, WHITELISTS } from "@/constants";
 
 export const whitelists: string[] = WHITELISTS[NETWORK];
 

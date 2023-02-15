@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import useMain from "@/hooks/useMain";
+import usePresale from "@/hooks/usePresale";
 import { PresaleStatus } from "@/types";
 
 const Timer = () => {
-  const { status, remainingSeconds } = useMain();
+  const { status, remainingSeconds } = usePresale();
   const [timeInfo, setTimeInfo] = useState("00:00:00:00");
 
   const title = () => {
@@ -37,7 +37,7 @@ const Timer = () => {
   }, [remainingSeconds, status]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center m-5">
       <h1 className="text-4xl mb-4">{title()}</h1>
       <span className="text-3xl">{timeInfo}</span>
     </div>

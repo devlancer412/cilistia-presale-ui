@@ -1,13 +1,16 @@
-import styles from "@/styles/Home.module.css";
 import { Timer, PresaleInfo, Buy } from "@/components";
 
 const Presale = () => {
   return (
-    <main className={styles.main}>
-      <Timer />
-      <PresaleInfo />
-      <Buy />
-    </main>
+    <div className="flex flex-row h-full items-center justify-center space-x-64">
+      <div className="flex flex-col">
+        <Timer />
+        <Buy />
+      </div>
+      <div>
+        <PresaleInfo />
+      </div>
+    </div>
   );
 };
 
