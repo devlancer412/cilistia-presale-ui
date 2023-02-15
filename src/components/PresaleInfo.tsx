@@ -1,18 +1,11 @@
-import { useEffect, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { useProvider } from "wagmi";
 import { HARD_CAP, CLI_PRICE } from "@/constants";
-import { getRemainCil } from "@/utils/app";
 import GradientSVG from "./gradientSVG";
+import usePresale from "@/hooks/usePresale";
 
 const PresaleInfo = () => {
-  const provider = useProvider();
-  const [sold, setSold] = useState<number>(0);
-
-  useEffect(() => {
-    getRemainCil(provider).then((remain) => setSold(HARD_CAP - remain));
-  }, [provider]);
+  const { sold } = usePresale();
 
   const hardCap = () => {
     return `$${HARD_CAP * CLI_PRICE}`;

@@ -3,7 +3,7 @@ import { useAccount, useSigner } from "wagmi";
 import { BigNumber, utils } from "ethers";
 import usePresale from "@/hooks/usePresale";
 import { PresaleStatus, Token } from "@/types";
-import { TOKENS, NETWORK } from "@/constants";
+import { TOKENS, NETWORK, CLI_PRICE, EXPLORER } from "@/constants";
 import {
   approve,
   getAllowance,
@@ -20,6 +20,7 @@ const Buy = () => {
   const [amount, setAmount] = useState("");
   const [selectedToken, setSelectedToken] = useState<Token>(TOKENS[NETWORK][0]);
   const [allowance, setAllowance] = useState<BigNumber | undefined>(undefined);
+  const [tx, setTx] = useState<string | undefined>(undefined);
 
   const onPurchase = async () => {
     if (!address || !signer) {
@@ -28,8 +29,14 @@ const Buy = () => {
     if (amount === "") {
       return;
     }
-
-    await purchase(address, Number(amount), selectedToken, signer);
+    try {
+      const tx = await purchase(address, Number(amount), selectedToken, signer);
+      setTx(tx.hash);
+      await tx.wait(1);
+      setTx(undefined);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const onApprove = async () => {
@@ -40,11 +47,29 @@ const Buy = () => {
       return;
     }
 
-    await approve(selectedToken, signer);
-    getAllowance(selectedToken, address, signer).then(setAllowance);
+    try {
+      const tx = await approve(selectedToken, signer);
+      setTx(tx.hash);
+      await tx.wait(1);
+      setTx(undefined);
+      getAllowance(selectedToken, address, signer).then(setAllowance);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const onMax = () => {};
+
+  const receiveCliMsg = () => {
+    if (amount !== "") {
+      if (requireApprove()) {
+        return "You need to approve first.";
+      }
+      return `You will receive ${Number(amount) / CLI_PRICE} CIL.`;
+    } else {
+      return "";
+    }
+  };
 
   useEffect(() => {
     if (address) {
@@ -108,21 +133,22 @@ const Buy = () => {
             <span>{selectedToken.symbol}</span>
           </div>
         </div>
-        {requireApprove() ? (
-          <button
-            className="bg-blue px-7 py-3 rounded-lg"
-            disabled={status !== PresaleStatus.OPEN}
-            onClick={onApprove}
+        <span className="text-sm">{receiveCliMsg()}</span>
+        {tx ? (
+          <a
+            className="bg-blue px-7 py-3 rounded-lg mt-2"
+            target="__blank"
+            href={`${EXPLORER[NETWORK]}tx/${tx}`}
           >
-            Approve
-          </button>
+            {requireApprove() ? "Approving..." : "Purchasing..."} View tx
+          </a>
         ) : (
           <button
-            className="bg-blue px-7 py-3 rounded-lg"
+            className="bg-blue px-7 py-3 rounded-lg mt-2"
             disabled={status !== PresaleStatus.OPEN}
-            onClick={onPurchase}
+            onClick={requireApprove() ? onApprove : onPurchase}
           >
-            Purchase
+            {requireApprove() ? "Approve" : "Purchase"}
           </button>
         )}
       </div>

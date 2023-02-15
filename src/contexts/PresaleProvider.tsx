@@ -6,12 +6,25 @@ import {
   useState,
   useRef,
 } from "react";
+import { providers } from "ethers";
 import { PresaleStatus } from "@/types";
-import { START_TIME, CLOSE_TIME } from "@/constants";
+import {
+  START_TIME,
+  CLOSE_TIME,
+  NETWORK,
+  PROVIDERS,
+  HARD_CAP,
+} from "@/constants";
+import { getPresaleContract, getRemainCil } from "@/utils/app";
+
+const provider = new providers.JsonRpcProvider(PROVIDERS[NETWORK], NETWORK);
+
+const presaleContract = getPresaleContract(provider);
 
 interface PresaleContextType {
   status: PresaleStatus;
   remainingSeconds: number;
+  sold: number;
 }
 
 export const PresaleContext = createContext<PresaleContextType>(
@@ -27,7 +40,20 @@ const PresaleProvider: FC<Props> = ({ children }) => {
     PresaleStatus.NOT_STARTED
   );
   const [remainingSeconds, setRemainingSeconds] = useState<number>(0);
+  const [sold, setSold] = useState<number>(0);
   const timer = useRef<NodeJS.Timer | undefined>(undefined);
+
+  useEffect(() => {
+    provider.on(presaleContract.filters.Buy(null), () => {
+      getRemainCil(provider).then((remain) => setSold(HARD_CAP - remain));
+    });
+  }, []);
+
+  useEffect(() => {
+    if (status !== PresaleStatus.NOT_STARTED) {
+      getRemainCil(provider).then((remain) => setSold(HARD_CAP - remain));
+    }
+  }, [status]);
 
   useEffect(() => {
     const currentTime = Math.floor(Date.now() / 1000);
@@ -70,7 +96,7 @@ const PresaleProvider: FC<Props> = ({ children }) => {
   };
 
   return (
-    <PresaleContext.Provider value={{ status, remainingSeconds }}>
+    <PresaleContext.Provider value={{ sold, status, remainingSeconds }}>
       {children}
     </PresaleContext.Provider>
   );

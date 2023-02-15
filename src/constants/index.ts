@@ -55,3 +55,8 @@ export const PROVIDERS: Record<number, string> = {
   5: "https://rpc.ankr.com/eth_goerli",
   1: "https://rpc.ankr.com/eth",
 };
+
+export const EXPLORER: Record<number, string> = {
+  5: "https://goerli.etherscan.io/",
+  1: "https://etherscan.io/",
+};
