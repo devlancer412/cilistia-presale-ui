@@ -6,7 +6,15 @@ module.exports = {
     "./src/contexts/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundColor: {
+        primary: "#0f172a",
+        blue: "rgb(59 130 246/var(--tw-bg-opacity))",
+      },
+      textColor: {
+        primary: "#fff",
+      },
+    },
   },
   plugins: [require("flowbite/plugin")],
 };

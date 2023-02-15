@@ -44,6 +44,8 @@ const Buy = () => {
     getAllowance(selectedToken, address, signer).then(setAllowance);
   };
 
+  const onMax = () => {};
+
   useEffect(() => {
     if (address) {
       getWhitelistStatus(address).then(setWhitelisted);
@@ -69,39 +71,68 @@ const Buy = () => {
 
   if (whitelisted) {
     return (
-      <div className="flex flex-col w-full items-center space-y-2">
-        <div className="flex flex-row space-x-4">
-          {TOKENS[NETWORK].map((token) => (
-            <button key={token.symbol} onClick={() => setSelectedToken(token)}>
+      <div className="flex flex-col w-full items-center">
+        <span className="mb-1">Select token below:</span>
+        <div className="flex flex-row rounded-lg mb-3">
+          {TOKENS[NETWORK].map((token, index) => (
+            <button
+              key={token.symbol}
+              className={`px-7 py-3 ${index === 0 ? "rounded-l-lg" : ""} ${
+                index === TOKENS[NETWORK].length - 1 ? "rounded-r-lg" : ""
+              } ${
+                token.symbol === selectedToken.symbol
+                  ? "bg-blue"
+                  : "bg-slate-700"
+              }`}
+              onClick={() => setSelectedToken(token)}
+            >
               {token.symbol}
             </button>
           ))}
         </div>
-        <div>
-          <input
-            value={amount}
-            type="number"
-            className="border-2 p-1"
-            placeholder="input amount"
-            onChange={(e) => setAmount(e.target.value)}
-          />
-          <span>{selectedToken.symbol}</span>
+        <div className="flex flex-col my-3">
+          <div className="flex justify-between">
+            <span className="text-sm">Amount</span>
+            <button className="text-sm underline" onClick={onMax}>
+              Max
+            </button>
+          </div>
+          <div className="border-2 px-2 rounded-md bg-opacity-[0.06] bg-white">
+            <input
+              value={amount}
+              type="number"
+              className="focus:border-transparent focus:ring-0 p-2 bg-transparent border-0"
+              placeholder="0.0"
+              onChange={(e) => setAmount(e.target.value)}
+            />
+            <span>{selectedToken.symbol}</span>
+          </div>
         </div>
         {requireApprove() ? (
-          <button disabled={status !== PresaleStatus.OPEN} onClick={onApprove}>
+          <button
+            className="bg-blue px-7 py-3 rounded-lg"
+            disabled={status !== PresaleStatus.OPEN}
+            onClick={onApprove}
+          >
             Approve
           </button>
         ) : (
-          <button disabled={status !== PresaleStatus.OPEN} onClick={onPurchase}>
+          <button
+            className="bg-blue px-7 py-3 rounded-lg"
+            disabled={status !== PresaleStatus.OPEN}
+            onClick={onPurchase}
+          >
             Purchase
           </button>
         )}
       </div>
     );
   } else {
-    <div className="flex flex-col w-full items-center space-y-2">
-      <div>Not whitelisted</div>
-    </div>;
+    return (
+      <div className="flex flex-col w-full items-center space-y-2">
+        <div>Not whitelisted</div>
+      </div>
+    );
   }
 };
 

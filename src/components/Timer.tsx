@@ -37,7 +37,7 @@ const Timer = () => {
   }, [remainingSeconds, status]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center m-5">
       <h1 className="text-4xl mb-4">{title()}</h1>
       <span className="text-3xl">{timeInfo}</span>
     </div>

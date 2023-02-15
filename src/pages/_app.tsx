@@ -37,8 +37,10 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <WagmiConfig client={wagmiClient}>
         <MainProvider>
-          <Navbar />
-          <Component {...pageProps} />
+          <main className="bg-primary flex flex-col h-screen w-screen text-primary">
+            <Navbar />
+            <Component {...pageProps} />
+          </main>
         </MainProvider>
       </WagmiConfig>
 
