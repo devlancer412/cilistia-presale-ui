@@ -79,7 +79,9 @@ const Buy = () => {
 
   useEffect(() => {
     if (address && signer) {
-      getAllowance(selectedToken, address, signer).then(setAllowance);
+      getAllowance(selectedToken, address, signer)
+        .then(setAllowance)
+        .catch((err) => console.log("GET ALLOWANCE FAILURE:", err));
     }
   }, [selectedToken, address, signer]);
 
