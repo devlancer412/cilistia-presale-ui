@@ -11,7 +11,9 @@ import { PRESALE_ADDRESS, CIL_TOKEN } from "@/constants";
 import ERC20_ABI from "@/contracts/abis/ERC20.json";
 import PRESALE_ABI from "@/contracts/abis/Presale.json";
 
-export const getWhitelistStatus = async (address: string): Promise<boolean> => {
+export const getWhitelistStatus = async (
+  address: `0x${string}`
+): Promise<boolean> => {
   const res = await fetch(`/api/isWhitelisted?address=${address}`);
   const data = await res.json();
 
@@ -19,7 +21,7 @@ export const getWhitelistStatus = async (address: string): Promise<boolean> => {
 };
 
 export const getSignature = async (
-  address: string,
+  address: `0x${string}`,
   amount: string,
   token: string
 ): Promise<SignatureRes> => {
@@ -32,7 +34,7 @@ export const getSignature = async (
 };
 
 export const purchase = async (
-  userAddr: string,
+  userAddr: `0x${string}`,
   amount: number,
   token: Token,
   signer: Signer

@@ -15,7 +15,7 @@ export default async function handler(
   const { address, amount, token } = req.query;
 
   const data = await getSignature(
-    address as string,
+    address as `0x${string}`,
     amount as string,
     token as string
   );

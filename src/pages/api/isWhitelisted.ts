@@ -10,7 +10,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const address: string = req.query.address as string;
+  const address: `0x${string}` = req.query.address as `0x${string}`;
 
   res.status(200).json({
     isWhitelisted: isWhitelisted(address),
