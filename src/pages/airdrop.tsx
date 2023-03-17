@@ -106,8 +106,6 @@ const AirdropPage = () => {
         const rawClosingTime = rawData[5] as number;
         const rawTotalClaimableAmountPerWallet = rawData[6] as BigNumber;
 
-        console.log("RAW BALANCE", rawBalance);
-
         return {
           balance: rawBalance.toString(),
           ogNumber: rawOGNumber,
@@ -162,6 +160,11 @@ const AirdropPage = () => {
             isOpen={isOpen}
             signature={airdropClaimSignatureRes.signature}
           />
+        )}
+        {airdropClaimSignatureRes?.error && (
+          <p className="text-sm text-error ml-3">
+            {airdropClaimSignatureRes?.error}
+          </p>
         )}
       </div>
     );
