@@ -13,6 +13,6 @@ const EXPLORER_RECORDS: Record<number, string> = {
   1: "https://etherscan.io/",
 };
 
-const NETWORK = Number(process.env.NEXT_PUBLIC_CHAIN_ID ?? 1);
+const NETWORK = Number(process.env.NEXT_PUBLIC_CHAIN_ID ?? 5);
 
 export { PROVIDER_RECORDS, EXPLORER_RECORDS, NETWORK };

@@ -30,14 +30,14 @@ import PresaleProvider from "@/contexts/PresaleProvider";
 
 const APP_NAME = "CIL Presale";
 const ALCHEMY_API_KEY =
-  process.env.NEXT_PUBLIC_ALCHEMY_KEY ?? "6sRA9AxrHpx5twRUCOI7kWrPSYtj-NNk";
+  process.env.NEXT_PUBLIC_ALCHEMY_KEY ?? "gRk6Rk7lqJsLeybRhCGlyL2LMGD8-CLf";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
     // localhost,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
-      ? [goerli]
-      : [arbitrum]),
+      ? [arbitrum]
+      : [goerli]),
   ],
   [
     // jsonRpcProvider({
@@ -47,7 +47,7 @@ const { chains, provider, webSocketProvider } = configureChains(
     //   }),
     // }),
     alchemyProvider({
-      apiKey: ALCHEMY_API_KEY,
+      apiKey: "gRk6Rk7lqJsLeybRhCGlyL2LMGD8-CLf",
       priority: 1,
     }),
     publicProvider({ priority: 2 }),

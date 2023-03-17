@@ -29,7 +29,9 @@ const AirdropStats = ({
 
       <div className="stat place-items-center">
         <div className="stat-title">Last Claimed</div>
-        <div className="stat-value text-primary">{humanReadableLastClaim}</div>
+        <div className="stat-value text-primary">
+          {humanReadableLastClaim || "N.A"}
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useContractReads, useAccount } from "wagmi";
 import dynamic from "next/dynamic";
 import { getSignature, getWhitelistStatus } from "@/services/airdrop";
@@ -27,6 +27,11 @@ type MassagedMultiCallData = {
 };
 
 const AirdropPage = () => {
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   const { address } = useAccount();
   const {
     isLoading: isGetWhiteListStatusLoading,
@@ -106,8 +111,6 @@ const AirdropPage = () => {
         const rawClosingTime = rawData[5] as number;
         const rawTotalClaimableAmountPerWallet = rawData[6] as BigNumber;
 
-        console.log("RAW BALANCE", rawBalance);
-
         return {
           balance: rawBalance.toString(),
           ogNumber: rawOGNumber,
@@ -122,6 +125,8 @@ const AirdropPage = () => {
       }
     },
   });
+
+  if (!hasMounted) return null;
 
   if (massagedValues) {
     const {
@@ -162,6 +167,11 @@ const AirdropPage = () => {
             isOpen={isOpen}
             signature={airdropClaimSignatureRes.signature}
           />
+        )}
+        {airdropClaimSignatureRes?.error && (
+          <p className="text-sm text-error ml-3">
+            {airdropClaimSignatureRes?.error}
+          </p>
         )}
       </div>
     );
