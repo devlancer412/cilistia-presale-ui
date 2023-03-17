@@ -20,7 +20,7 @@ import {
   ledgerWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { mainnet, goerli, hardhat, localhost } from "wagmi/chains";
+import { mainnet, goerli, localhost, arbitrum } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
@@ -29,14 +29,15 @@ import { Navbar } from "@/components";
 import PresaleProvider from "@/contexts/PresaleProvider";
 
 const APP_NAME = "CIL Presale";
-const ALCHEMY_API_KEY = "0JEq-KhcQzIlX1he9eJuWWfhAa-Nf0sg";
+const ALCHEMY_API_KEY =
+  process.env.NEXT_PUBLIC_ALCHEMY_KEY ?? "6sRA9AxrHpx5twRUCOI7kWrPSYtj-NNk";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
     // localhost,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
       ? [goerli]
-      : [mainnet]),
+      : [arbitrum]),
   ],
   [
     // jsonRpcProvider({

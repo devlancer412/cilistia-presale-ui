@@ -1,6 +1,18 @@
 import { Token } from "@/types";
 
 const ACCEPTED_TOKENS_RECORDS: Record<number, Token[]> = {
+  42161: [
+    {
+      address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      decimals: 6,
+      symbol: "USDC",
+    },
+    {
+      address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      decimals: 6,
+      symbol: "USDT",
+    },
+  ],
   1337: [
     {
       address: "0xeb1D33F4faE90CA670E8F0AfF88C441f95328A2E",
@@ -40,6 +52,11 @@ const ACCEPTED_TOKENS_RECORDS: Record<number, Token[]> = {
 };
 
 const CIL_TOKEN_RECORDS: Record<number, Token> = {
+  42161: {
+    address: "0x58fd26e37e02d2c4ebf324504fcd87dc82adb74f",
+    decimals: 18,
+    symbol: "CIL",
+  },
   1337: {
     address: "0x58fd26e37e02d2c4ebf324504fcd87dc82adb74f",
     decimals: 18,
