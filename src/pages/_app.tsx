@@ -47,7 +47,7 @@ const { chains, provider, webSocketProvider } = configureChains(
     //   }),
     // }),
     alchemyProvider({
-      apiKey: ALCHEMY_API_KEY,
+      apiKey: "gRk6Rk7lqJsLeybRhCGlyL2LMGD8-CLf",
       priority: 1,
     }),
     publicProvider({ priority: 2 }),

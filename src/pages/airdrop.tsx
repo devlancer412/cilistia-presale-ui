@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useContractReads, useAccount } from "wagmi";
 import dynamic from "next/dynamic";
 import { getSignature, getWhitelistStatus } from "@/services/airdrop";
@@ -27,6 +27,11 @@ type MassagedMultiCallData = {
 };
 
 const AirdropPage = () => {
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   const { address } = useAccount();
   const {
     isLoading: isGetWhiteListStatusLoading,
@@ -120,6 +125,8 @@ const AirdropPage = () => {
       }
     },
   });
+
+  if (!hasMounted) return null;
 
   if (massagedValues) {
     const {
