@@ -1,6 +1,13 @@
 import "@/styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import { useState } from "react";
 import type { AppProps } from "next/app";
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   RainbowKitProvider,
   getDefaultWallets,
@@ -13,9 +20,10 @@ import {
   ledgerWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { mainnet, polygon, optimism, arbitrum, goerli } from "wagmi/chains";
+import { mainnet, goerli, hardhat, localhost } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { alchemyProvider } from "wagmi/providers/alchemy";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
 import { Navbar } from "@/components";
 import PresaleProvider from "@/contexts/PresaleProvider";
@@ -25,18 +33,23 @@ const ALCHEMY_API_KEY = "0JEq-KhcQzIlX1he9eJuWWfhAa-Nf0sg";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : []),
+    // localhost,
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
+      ? [goerli]
+      : [mainnet]),
   ],
   [
+    // jsonRpcProvider({
+    //   priority: 0,
+    //   rpc: (chain) => ({
+    //     http: `http://127.0.0.1:8545/`,
+    //   }),
+    // }),
     alchemyProvider({
       apiKey: ALCHEMY_API_KEY,
-      priority: 0,
+      priority: 1,
     }),
-    publicProvider({ priority: 1 }),
+    publicProvider({ priority: 2 }),
   ]
 );
 
@@ -69,28 +82,34 @@ const wagmiClient = createClient({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState<QueryClient>(() => new QueryClient());
   return (
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider
-        coolMode
-        theme={darkTheme({
-          accentColor: "#7b3fe4",
-          accentColorForeground: "white",
-          borderRadius: "small",
-          fontStack: "system",
-          overlayBlur: "small",
-        })}
-        modalSize="compact"
-        appInfo={demoAppInfo}
-        chains={chains}
-      >
-        <PresaleProvider>
-          <main className="bg-primary flex flex-col h-screen w-screen text-primary">
-            <Navbar />
-            <Component {...pageProps} />
-          </main>
-        </PresaleProvider>
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <WagmiConfig client={wagmiClient}>
+          <RainbowKitProvider
+            coolMode
+            theme={darkTheme({
+              accentColor: "#6366f1",
+              accentColorForeground: "white",
+              borderRadius: "small",
+              fontStack: "system",
+              overlayBlur: "small",
+            })}
+            modalSize="compact"
+            appInfo={demoAppInfo}
+            chains={chains}
+          >
+            <PresaleProvider>
+              <main className="bg-primary flex flex-col h-screen w-screen text-primary">
+                <Navbar />
+                <Component {...pageProps} />
+              </main>
+            </PresaleProvider>
+          </RainbowKitProvider>
+        </WagmiConfig>
+      </Hydrate>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   );
 }

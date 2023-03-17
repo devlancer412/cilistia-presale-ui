@@ -1,3 +1,5 @@
+import { Signature } from "ethers";
+
 export enum PresaleStatus {
   NOT_STARTED,
   OPEN,
@@ -5,7 +7,7 @@ export enum PresaleStatus {
 }
 
 export type Token = {
-  address: string;
+  address: `0x${string}`;
   decimals: number;
   symbol: string;
 };
@@ -13,5 +15,5 @@ export type Token = {
 export type SignatureRes = {
   result: boolean;
   error?: string;
-  signature?: string;
+  signature?: Signature;
 };
