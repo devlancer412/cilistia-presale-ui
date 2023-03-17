@@ -3,7 +3,7 @@ import { useAccount, useSigner } from "wagmi";
 import { BigNumber, utils } from "ethers";
 import usePresale from "@/hooks/usePresale";
 import { PresaleStatus, Token } from "@/types";
-import { TOKENS, NETWORK, CLI_PRICE, EXPLORER } from "@/constants";
+import { ACCEPTED_TOKENS, NETWORK, CLI_PRICE, EXPLORER } from "@/constants";
 import {
   approve,
   getAllowance,
@@ -18,7 +18,7 @@ const Buy = () => {
   const { status } = usePresale();
   const [whitelisted, setWhitelisted] = useState(false);
   const [amount, setAmount] = useState("");
-  const [selectedToken, setSelectedToken] = useState<Token>(TOKENS[NETWORK][0]);
+  const [selectedToken, setSelectedToken] = useState<Token>(ACCEPTED_TOKENS[0]);
   const [allowance, setAllowance] = useState<BigNumber | undefined>(undefined);
   const [tx, setTx] = useState<string | undefined>(undefined);
 
@@ -101,11 +101,11 @@ const Buy = () => {
       <div className="flex flex-col w-full items-center">
         <span className="mb-1">Select token below:</span>
         <div className="flex flex-row rounded-lg mb-3">
-          {TOKENS[NETWORK].map((token, index) => (
+          {ACCEPTED_TOKENS.map((token, index) => (
             <button
               key={token.symbol}
               className={`px-7 py-3 ${index === 0 ? "rounded-l-lg" : ""} ${
-                index === TOKENS[NETWORK].length - 1 ? "rounded-r-lg" : ""
+                index === ACCEPTED_TOKENS.length - 1 ? "rounded-r-lg" : ""
               } ${
                 token.symbol === selectedToken.symbol
                   ? "bg-blue"

@@ -1,23 +1,20 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getSignature } from "@/utils/api";
+import { generateSignature } from "@/utils/airdrop";
+import { Signature } from "ethers";
 
 type Data = {
   result: boolean;
   error?: string;
-  signature?: string;
+  signature?: Signature;
 };
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { address, amount, token } = req.query;
+  const { address } = req.query;
 
-  const data = await getSignature(
-    address as `0x${string}`,
-    amount as string,
-    token as string
-  );
+  const data: Data = await generateSignature(address as `0x${string}`);
   res.status(200).json(data);
 }

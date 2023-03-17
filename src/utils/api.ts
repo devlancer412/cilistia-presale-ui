@@ -1,17 +1,17 @@
 import { utils, Wallet } from "ethers";
-import { NETWORK, WHITELISTS } from "@/constants";
+import { PRESALE_WHITELIST } from "@/constants";
 
-export const whitelists: string[] = WHITELISTS[NETWORK];
+export const whitelists: `0x${string}`[] = PRESALE_WHITELIST;
 
 const PRIVATE_KEY: string = process.env.NEXT_SIGNER_PRIVATEKEY ?? "";
 const signer = new Wallet(PRIVATE_KEY);
 
-export const isWhitelisted = (address: string): boolean => {
+export const isWhitelisted = (address: `0x${string}`): boolean => {
   return !!whitelists.find((x) => x.toLowerCase() === address.toLowerCase());
 };
 
 export const getSignature = async (
-  address: string,
+  address: `0x${string}`,
   amount: string,
   tokenSymbol: string
 ) => {

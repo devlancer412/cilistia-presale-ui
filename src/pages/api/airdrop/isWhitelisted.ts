@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { isWhitelisted } from "@/utils/api";
+import { isWhitelisted } from "@/utils/airdrop";
 
 type Data = {
   isWhitelisted: boolean;

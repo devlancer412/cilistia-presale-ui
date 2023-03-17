@@ -12,12 +12,12 @@ import {
   START_TIME,
   CLOSE_TIME,
   NETWORK,
-  PROVIDERS,
+  PROVIDER,
   HARD_CAP,
 } from "@/constants";
 import { getPresaleContract, getRemainCil } from "@/utils/app";
 
-const provider = new providers.JsonRpcProvider(PROVIDERS[NETWORK], NETWORK);
+const provider = new providers.JsonRpcProvider(PROVIDER, NETWORK);
 
 const presaleContract = getPresaleContract(provider);
 
