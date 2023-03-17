@@ -36,8 +36,8 @@ const { chains, provider, webSocketProvider } = configureChains(
   [
     // localhost,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
-      ? [goerli]
-      : [arbitrum]),
+      ? [arbitrum]
+      : [goerli]),
   ],
   [
     // jsonRpcProvider({
