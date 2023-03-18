@@ -1,4 +1,4 @@
-import PresalePage from "./Presale";
+import PresalePage from './Presale';
 
 export default function Home() {
   return <PresalePage />;

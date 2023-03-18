@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
-import { getSignature } from "@/utils/api";
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { getPresaleSignature } from '@/utils/api';
 
 type Data = {
   result: boolean;
@@ -14,10 +14,11 @@ export default async function handler(
 ) {
   const { address, amount, token } = req.query;
 
-  const data = await getSignature(
+  const data = await getPresaleSignature(
     address as `0x${string}`,
     amount as string,
     token as string
   );
+  
   res.status(200).json(data);
 }

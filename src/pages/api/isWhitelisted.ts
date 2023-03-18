@@ -1,9 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
-import { isWhitelisted } from "@/utils/api";
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { isPresaleWhitelisted, isAirdropWhitelisted } from '@/utils/api';
 
 type Data = {
-  isWhitelisted: boolean;
+  presale: boolean;
+  airdrop: boolean;
 };
 
 export default function handler(
@@ -13,6 +14,7 @@ export default function handler(
   const address: `0x${string}` = req.query.address as `0x${string}`;
 
   res.status(200).json({
-    isWhitelisted: isWhitelisted(address),
+    presale: isPresaleWhitelisted(address),
+    airdrop: isAirdropWhitelisted(address),
   });
 }

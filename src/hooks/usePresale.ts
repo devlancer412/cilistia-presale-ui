@@ -1,6 +1,5 @@
-import { useContext } from "react";
-import { PresaleContext } from "@/contexts/PresaleProvider";
+import { useContext } from 'react';
+import { PresaleContext } from '@/contexts/PresaleContext';
 
-const usePresale = () => useContext(PresaleContext);
-
-export default usePresale;
+export const usePresale = () =>
+  useContext(PresaleContext) as PresaleContextType;

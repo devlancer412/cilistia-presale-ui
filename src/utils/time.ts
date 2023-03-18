@@ -1,12 +1,8 @@
-import { fromUnixTime, format, isToday } from "date-fns";
+import { fromUnixTime, format } from 'date-fns';
 
-const toHumanReadableDate = (unixTs: number) => {
+const toHumanReadableDateTime = (unixTs: number) => {
   const dateFNS = fromUnixTime(unixTs);
-  return format(dateFNS, "dd MMM");
+  return format(dateFNS, 'do MMM HH:mm');
 };
 
-const isUnixTsToday = (unixTs: number) => {
-  const dateFNS = fromUnixTime(unixTs);
-  return isToday(dateFNS);
-};
-export { toHumanReadableDate, isUnixTsToday };
+export { toHumanReadableDateTime };
