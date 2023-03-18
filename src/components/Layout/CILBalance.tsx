@@ -1,6 +1,6 @@
 import { useBalance, useAccount, useContractEvent } from 'wagmi';
 import { CIL_TOKEN } from '@/constants';
-import { fourDp } from '@/utils/math';
+import { formatAmountWithUnit } from '@/utils/math';
 import ERC20Abi from '@/contracts/abis/ERC20.json';
 
 const CILBalance = () => {
@@ -28,7 +28,7 @@ const CILBalance = () => {
 
   return (
     <h1 className='text-1x font-bold mr-5 text-white'>
-      {data?.formatted && fourDp(data.formatted)}
+      {data?.formatted && formatAmountWithUnit(parseFloat(data.formatted), 4)}
       <span className='text-cilistia ml-1'>{data?.symbol}</span>
     </h1>
   );

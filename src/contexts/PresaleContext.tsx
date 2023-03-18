@@ -20,6 +20,7 @@ import {
 import { contractConfig as presaleContractConfig } from '@/contracts/config/presale';
 import { formatUnits, parseUnits, splitSignature } from 'ethers/lib/utils.js';
 import { getPresaleSignature } from '@/utils/app';
+import { bnToNumber } from '@/utils/math';
 
 export enum PresaleState {
   NOT_STARTED,
@@ -74,8 +75,8 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
         return {
           openingTime: rawOpeningTime,
           closingTime: rawClosingTime,
-          sold: HARD_CAP - parseFloat(formatUnits(rawBalance)),
-          price: parseFloat(formatUnits(rawPrice, 2)),
+          sold: HARD_CAP - bnToNumber(rawBalance),
+          price: bnToNumber(rawPrice, 2),
         };
       }
     },
@@ -130,7 +131,10 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
     if (currentTime < data.openingTime) {
       setStatus(PresaleState.NOT_STARTED);
       setRemainingSeconds(data.openingTime - currentTime);
-    } else if (currentTime < data.closingTime && currentTime >= data.openingTime) {
+    } else if (
+      currentTime < data.closingTime &&
+      currentTime >= data.openingTime
+    ) {
       setStatus(PresaleState.OPEN);
       setRemainingSeconds(data.closingTime - currentTime);
     } else {

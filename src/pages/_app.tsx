@@ -3,12 +3,6 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { useState } from 'react';
 import type { AppProps } from 'next/app';
 import {
-  Hydrate,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import {
   RainbowKitProvider,
   getDefaultWallets,
   connectorsForWallets,
@@ -75,40 +69,34 @@ const wagmiClient = createClient({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState<QueryClient>(() => new QueryClient());
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <WagmiConfig client={wagmiClient}>
-          <RainbowKitProvider
-            coolMode
-            theme={darkTheme({
-              accentColor: '#6366f1',
-              accentColorForeground: 'white',
-              borderRadius: 'small',
-              fontStack: 'system',
-              overlayBlur: 'small',
-            })}
-            modalSize='compact'
-            appInfo={demoAppInfo}
-            chains={chains}
-          >
-            <ContextProviders>
-              <main className='flex flex-col min-h-screen overflow-hidden bg-gray-900'>
-                <Navbar />
+    <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider
+        coolMode
+        theme={darkTheme({
+          accentColor: '#6366f1',
+          accentColorForeground: 'white',
+          borderRadius: 'small',
+          fontStack: 'system',
+          overlayBlur: 'small',
+        })}
+        modalSize='compact'
+        appInfo={demoAppInfo}
+        chains={chains}
+      >
+        <ContextProviders>
+          <main className='flex flex-col min-h-screen overflow-hidden bg-gray-900'>
+            <Navbar />
 
-                {/*  Page content */}
-                <div className='grow z-10'>
-                  <Component {...pageProps} />
-                </div>
+            {/*  Page content */}
+            <div className='grow z-10'>
+              <Component {...pageProps} />
+            </div>
 
-                <Footer />
-              </main>
-            </ContextProviders>
-          </RainbowKitProvider>
-        </WagmiConfig>
-      </Hydrate>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+            <Footer />
+          </main>
+        </ContextProviders>
+      </RainbowKitProvider>
+    </WagmiConfig>
   );
 }

@@ -10,6 +10,7 @@ import ERC20Abi from '@/contracts/abis/ERC20.json';
 import { PRESALE_CONTRACT_ADDRESS } from '@/constants';
 import { BigNumber } from 'ethers';
 import { formatUnits, parseUnits } from 'ethers/lib/utils.js';
+import { bnToNumber } from '@/utils/math';
 
 export const usePurchaseToken = (token: Token) => {
   const { address } = useAccount();
@@ -37,8 +38,8 @@ export const usePurchaseToken = (token: Token) => {
         const allowance = rawData[1] as BigNumber;
 
         return {
-          balance: parseFloat(formatUnits(balance, token.decimals)),
-          allowance: parseFloat(formatUnits(allowance, token.decimals)),
+          balance: bnToNumber(balance, token.decimals),
+          allowance: bnToNumber(allowance, token.decimals),
         };
       }
     },
