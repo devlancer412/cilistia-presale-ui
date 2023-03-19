@@ -23,17 +23,7 @@ class ErrorBoundary extends React.Component<PropsWithChildren> {
     // Check if the error is thrown
     if ((this.state as any).hasError) {
       // You can render any custom fallback UI
-      return (
-        <div>
-          <h2>Oops, there is an error!</h2>
-          <button
-            type='button'
-            onClick={() => this.setState({ hasError: false })}
-          >
-            Try again?
-          </button>
-        </div>
-      );
+      return <div className='bg-gray-900 w-screen h-screen'></div>;
     }
 
     // Return children components in case of no error
