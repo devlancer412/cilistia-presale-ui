@@ -9,8 +9,6 @@ const AirdropStatus = () => {
   const currentTime = useCurrentTime();
   const { claimAmountPerWallet, lastClaimedTime } = useAirdrop();
 
-  console.log(claimAmountPerWallet);
-
   return (
     <div className='!pt-4 bg-gray-900 pb-4'>
       <div className='px-6 mx-auto max-w-7xl lg:px-8'>
