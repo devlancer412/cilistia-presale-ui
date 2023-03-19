@@ -32,11 +32,11 @@ const { chains, provider, webSocketProvider } = configureChains(
       : [goerli]),
   ],
   [
-    alchemyProvider({
-      apiKey: ALCHEMY_API_KEY,
-      priority: 1,
-    }),
-    publicProvider({ priority: 2 }),
+    // alchemyProvider({
+    //   apiKey: ALCHEMY_API_KEY,
+    //   priority: 1,
+    // }),
+    publicProvider({ priority: 1 }),
   ]
 );
 
