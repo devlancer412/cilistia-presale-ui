@@ -93,6 +93,10 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
         };
       }
     },
+    onError: (err) => {
+      console.log(err);
+    },
+    allowFailure: true,
   });
 
   const airdropContract = useContract({

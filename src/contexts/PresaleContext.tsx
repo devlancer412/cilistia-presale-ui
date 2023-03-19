@@ -84,6 +84,10 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
         };
       }
     },
+    onError: (err) => {
+      console.log(err);
+    },
+    allowFailure: true,
   });
 
   const presaleContract = useContract({

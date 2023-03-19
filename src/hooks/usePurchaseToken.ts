@@ -47,6 +47,7 @@ export const usePurchaseToken = (token: Token) => {
     onError: (err) => {
       console.log(err);
     },
+    allowFailure: true,
   });
 
   useContractEvent({
