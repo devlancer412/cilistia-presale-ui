@@ -19,9 +19,11 @@ interface PresaleContextType {
   purchase: (amount: number, token: Token) => Promise<any> | undefined;
 }
 
-interface WalletStatsContextType {
+interface AppStatsContextType {
   presaleWhitelisted: boolean;
   airdropWhitelisted: boolean;
+  totalHolderCount?: number;
+  refetch: () => Promise<void>;
 }
 
 interface AirdropContextType {

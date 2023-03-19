@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import { PurchaseModal } from '@/components/modals';
-import { usePresale, useWalletStats } from '@/hooks';
+import { usePresale, useAppStats } from '@/hooks';
 import { PresaleState } from '@/contexts/PresaleContext';
 
 const PurchaseButton = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { isConnected } = useAccount();
   const { status } = usePresale();
-  const { presaleWhitelisted } = useWalletStats();
+  const { presaleWhitelisted } = useAppStats();
 
   return (
     <div className='mt-8'>

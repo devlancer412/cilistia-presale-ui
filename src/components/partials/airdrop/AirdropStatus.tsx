@@ -1,10 +1,11 @@
-import { useAirdrop, useCurrentTime } from '@/hooks';
+import { useAirdrop, useAppStats, useCurrentTime } from '@/hooks';
 import { formatAmountWithUnit } from '@/utils/math';
 import { usePresale } from '@/hooks/usePresale';
 import { ADAY } from '@/constants';
 import { toHumanReadableDateTime } from '@/utils/time';
 
 const AirdropStatus = () => {
+  const { totalHolderCount } = useAppStats();
   const { price } = usePresale();
   const currentTime = useCurrentTime();
   const { claimAmountPerWallet, lastClaimedTime } = useAirdrop();
@@ -19,7 +20,9 @@ const AirdropStatus = () => {
                 Token Holders
               </dt>
               <dd className='order-first text-3xl font-semibold tracking-tight text-white uppercase'>
-                -
+                {totalHolderCount
+                  ? formatAmountWithUnit(totalHolderCount, 2)
+                  : '-'}
               </dd>
             </div>
             <div className='flex flex-col p-8 bg-white/5'>

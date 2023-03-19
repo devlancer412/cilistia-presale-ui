@@ -1,5 +1,5 @@
 import { PresaleState } from '@/contexts/PresaleContext';
-import { usePresale, useWalletStats } from '@/hooks';
+import { usePresale, useAppStats } from '@/hooks';
 import dynamic from 'next/dynamic';
 
 const PurchaseButton = dynamic(
@@ -28,7 +28,7 @@ const PresaleStatus = dynamic(
 
 const Presale = () => {
   const { status } = usePresale();
-  const { presaleWhitelisted } = useWalletStats();
+  const { presaleWhitelisted } = useAppStats();
 
   return (
     <div className='py-24 overflow-hidden sm:py-32'>

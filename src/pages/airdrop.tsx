@@ -1,5 +1,5 @@
 import { AirdropState } from '@/contexts/AirdropContext';
-import { useAirdrop, useWalletStats } from '@/hooks';
+import { useAirdrop, useAppStats } from '@/hooks';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
@@ -29,7 +29,7 @@ const AirdropStatus = dynamic(
 
 const Airdrop = () => {
   const { status } = useAirdrop();
-  const { airdropWhitelisted } = useWalletStats();
+  const { airdropWhitelisted } = useAppStats();
 
   return (
     <>

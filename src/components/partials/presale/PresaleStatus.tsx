@@ -1,8 +1,9 @@
 import { HARD_CAP } from '@/constants';
-import { usePresale } from '@/hooks';
+import { useAppStats, usePresale } from '@/hooks';
 import { formatAmountWithUnit } from '@/utils/math';
 
 const PresaleStatus = () => {
+  const { totalHolderCount } = useAppStats();
   const { price, sold } = usePresale();
 
   return (
@@ -15,7 +16,9 @@ const PresaleStatus = () => {
                 Token Holders
               </dt>
               <dd className='order-first text-3xl font-semibold tracking-tight text-white uppercase'>
-                -
+                {totalHolderCount
+                  ? formatAmountWithUnit(totalHolderCount, 2)
+                  : '-'}
               </dd>
             </div>
             <div className='flex flex-col p-8 bg-white/5'>

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
-import { useAirdrop, useWalletStats } from '@/hooks';
+import { useAirdrop, useAppStats } from '@/hooks';
 import { AirdropState } from '@/contexts/AirdropContext';
 
 const ClaimButton = () => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
   const { isConnected } = useAccount();
   const { status, claim, canClaim } = useAirdrop();
-  const { airdropWhitelisted } = useWalletStats();
+  const { airdropWhitelisted } = useAppStats();
 
   const handleClaim = async () => {
     try {
