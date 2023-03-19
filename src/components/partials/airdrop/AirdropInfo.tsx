@@ -15,7 +15,7 @@ const AirdropInfo = () => {
     return canClaim
       ? 100
       : lastClaimedTime
-      ? (currentTime - lastClaimedTime) / ADAY
+      ? ((currentTime - lastClaimedTime) * 100) / ADAY
       : 0;
   };
 
