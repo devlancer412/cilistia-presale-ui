@@ -21,7 +21,7 @@ const CILBalance = () => {
       if (from === address || to === address) {
         refetch();
       }
-      refetchHolderCount();
+      setTimeout(() => refetchHolderCount(), 1000);
     },
   });
 
