@@ -13,7 +13,6 @@ const WalletStatsContextProvider: React.FC<PropsWithChildren> = ({
   const [presaleWhitelisted, setPresaleWhitelisted] = useState<boolean>(false);
   const [airdropWhitelisted, setAirdropWhitelisted] = useState<boolean>(false);
 
-  // Set up the timeout.
   useEffect(() => {
     if (!address) {
       return;
