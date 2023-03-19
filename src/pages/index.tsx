@@ -1,5 +1,14 @@
 import PresalePage from './Presale';
+import Head from 'next/head';
 
 export default function Home() {
-  return <PresalePage />;
+  return (
+    <>
+      <Head>
+        <title>Presale | Cilistia</title>
+        <meta name='description' content='Take part in Cilistia community' />
+      </Head>
+      <PresalePage />
+    </>
+  );
 }

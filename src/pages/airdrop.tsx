@@ -1,5 +1,6 @@
 import { AirdropState } from '@/contexts/AirdropContext';
 import { useAirdrop, useWalletStats } from '@/hooks';
+import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
 const ClaimButton = dynamic(
@@ -31,33 +32,39 @@ const Airdrop = () => {
   const { airdropWhitelisted } = useWalletStats();
 
   return (
-    <div className='py-24 overflow-hidden sm:py-32'>
-      <div className='px-6 mx-auto max-w-7xl lg:px-8'>
-        <div className='grid max-w-2xl grid-cols-1 mx-auto gap-y-16 gap-x-8 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start'>
-          <div className='lg:pt-4 lg:pr-4'>
-            <div className='lg:max-w-lg'>
-              <Timer />
-              {status === AirdropState.CLOSED && (
+    <>
+      <Head>
+        <title>Airdrop | Cilistia</title>
+        <meta name='description' content='Take part in Cilistia community' />
+      </Head>
+      <div className='py-24 overflow-hidden sm:py-32'>
+        <div className='px-6 mx-auto max-w-7xl lg:px-8'>
+          <div className='grid max-w-2xl grid-cols-1 mx-auto gap-y-16 gap-x-8 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start'>
+            <div className='lg:pt-4 lg:pr-4'>
+              <div className='lg:max-w-lg'>
+                <Timer />
+                {status === AirdropState.CLOSED && (
+                  <p className='mt-6 text-lg leading-8 text-gray-600'>
+                    Woops! Airdrop finished. You can buy token on Uniswap
+                  </p>
+                )}
                 <p className='mt-6 text-lg leading-8 text-gray-600'>
-                  Woops! Airdrop finished. You can buy token on Uniswap
-                </p>
-              )}
-              <p className='mt-6 text-lg leading-8 text-gray-600'>
-                {airdropWhitelisted
-                  ? `You can take part in Cilistia's airdrop.\
+                  {airdropWhitelisted
+                    ? `You can take part in Cilistia's airdrop.\
                   Get Airdrop by Clicking Claim Button.`
-                  : `In order to participate in Cilistia's airdrop you will\
+                    : `In order to participate in Cilistia's airdrop you will\
                   need to have been whitelisted.`}
-              </p>
-              <ClaimButton />
+                </p>
+                <ClaimButton />
+              </div>
             </div>
+            <AirdropInfo />
           </div>
-          <AirdropInfo />
         </div>
+        {/* Airdrop Stats Here */}
+        <AirdropStatus />
       </div>
-      {/* Airdrop Stats Here */}
-      <AirdropStatus />
-    </div>
+    </>
   );
 };
 
