@@ -100,25 +100,32 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
       if (!address || !presaleContract) {
         throw Error('Please connect your wallet');
       }
-      const amountBN = parseUnits(amount.toString(), token.decimals);
 
-      const signatureRes = await getPresaleSignature(
-        address,
-        amountBN.toString(),
-        token.symbol
-      );
+      try {
+        const amountBN = parseUnits(amount.toString(), token.decimals);
 
-      if (!signatureRes.result) {
-        return;
+        const signatureRes = await getPresaleSignature(
+          address,
+          amountBN.toString(),
+          token.symbol
+        );
+
+        if (!signatureRes.result) {
+          return;
+        }
+
+        const sign = splitSignature(signatureRes.signature!);
+
+        return presaleContract.buy(amountBN, token.symbol, {
+          r: sign.r,
+          s: sign.s,
+          v: sign.v,
+        });
+      } catch (err: any) {
+        console.log(err);
+
+        throw Error(err?.message && err?.reason);
       }
-
-      const sign = splitSignature(signatureRes.signature!);
-
-      return presaleContract.buy(amountBN, token.symbol, {
-        r: sign.r,
-        s: sign.s,
-        v: sign.v,
-      });
     },
     [address, presaleContract]
   );

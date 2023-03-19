@@ -15,8 +15,12 @@ const ClaimButton = () => {
       setIsWaiting(true);
       const tx = await claim();
       await tx.wait();
+
+      // add success alert here
     } catch (err) {
       console.log(err);
+
+      // add error alert here
     } finally {
       setIsWaiting(false);
     }

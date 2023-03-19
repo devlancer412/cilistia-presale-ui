@@ -109,19 +109,25 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
       throw Error('Please connect your wallet');
     }
 
-    const signatureRes = await getAirdropSignature(address);
+    try {
+      const signatureRes = await getAirdropSignature(address);
 
-    if (!signatureRes.result) {
-      return;
+      if (!signatureRes.result) {
+        return;
+      }
+
+      const sign = splitSignature(signatureRes.signature!);
+
+      return airdropContract.claim({
+        r: sign.r,
+        s: sign.s,
+        v: sign.v,
+      });
+    } catch (err: any) {
+      console.log(err);
+
+      throw Error(err?.message && err?.reason);
     }
-
-    const sign = splitSignature(signatureRes.signature!);
-
-    return airdropContract.claim({
-      r: sign.r,
-      s: sign.s,
-      v: sign.v,
-    });
   }, [address, airdropContract]);
 
   useContractEvent({

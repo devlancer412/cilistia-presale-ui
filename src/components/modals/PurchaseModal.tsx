@@ -26,8 +26,12 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
       setIsWaiting(true);
       const tx = await approve(amount);
       await tx.wait();
+
+      // add success alert here
     } catch (err) {
       console.log(err);
+
+      // add error alert here
     } finally {
       setIsWaiting(false);
     }
@@ -38,8 +42,12 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
       setIsWaiting(true);
       const tx = await purchase(amount, selectedToken);
       await tx.wait();
+
+      // add success alert here
     } catch (err) {
       console.log(err);
+
+      // add error alert here
     } finally {
       setIsWaiting(false);
     }

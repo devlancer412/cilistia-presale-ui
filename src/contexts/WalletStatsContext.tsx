@@ -19,14 +19,22 @@ const WalletStatsContextProvider: React.FC<PropsWithChildren> = ({
       return;
     }
 
-    getWhitelistStatus(address).then((res) => {
-      setPresaleWhitelisted(res.presale);
-      setAirdropWhitelisted(res.airdrop);
-    });
+    getWhitelistStatus(address)
+      .then((res) => {
+        setPresaleWhitelisted(res.presale);
+        setAirdropWhitelisted(res.airdrop);
+      })
+      .catch((err: any) => {
+        console.log(err);
+
+        // add error alert here
+      });
   }, [address]);
 
   return (
-    <WalletStatsContext.Provider value={{ presaleWhitelisted, airdropWhitelisted }}>
+    <WalletStatsContext.Provider
+      value={{ presaleWhitelisted, airdropWhitelisted }}
+    >
       {children}
     </WalletStatsContext.Provider>
   );
