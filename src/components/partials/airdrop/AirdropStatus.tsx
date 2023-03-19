@@ -53,7 +53,7 @@ const AirdropStatus = () => {
               <dd className='order-first text-3xl font-semibold tracking-tight text-white'>
                 {lastClaimedTime !== undefined
                   ? currentTime > lastClaimedTime + ADAY
-                    ? 'claim now'
+                    ? 'Available Now'
                     : toHumanReadableDateTime(lastClaimedTime + ADAY)
                   : '-'}
               </dd>
