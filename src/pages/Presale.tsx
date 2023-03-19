@@ -38,11 +38,11 @@ const Presale = () => {
             <div className='lg:max-w-lg'>
               <Timer />
               {status === PresaleState.CLOSED && (
-                <p className='mt-6 text-lg leading-8 text-gray-600'>
+                <p className='mt-6 text-lg leading-8 text-gray-600 text-center md:text-start'>
                   Woops! Presale finished. You can buy token on Uniswap
                 </p>
               )}
-              <p className='mt-6 text-lg leading-8 text-gray-600'>
+              <p className='mt-6 text-lg leading-8 text-gray-600 text-center md:text-start'>
                 {presaleWhitelisted
                   ? `You can take part in Cilistia's presale.\
                   Purchase CIL Token with USDT/USDC.`

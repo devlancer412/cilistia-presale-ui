@@ -12,7 +12,7 @@ const PurchaseButton = () => {
   const { presaleWhitelisted } = useAppStats();
 
   return (
-    <div className='mt-8'>
+    <div className='mt-8 flex items-center justify-center md:justify-start'>
       {isConnected ? (
         <button
           type='button'

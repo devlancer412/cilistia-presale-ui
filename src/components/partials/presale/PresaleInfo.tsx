@@ -13,7 +13,7 @@ const PresaleInfo = () => {
 
   return (
     <div className='flex flex-col w-full items-center space-y-2'>
-      <div className='h-96 w-96 relative'>
+      <div className='h-72 w-72 md:h-96 md:w-96 relative'>
         <GradientSVG />
         <CircularProgressbar
           value={percentage()}

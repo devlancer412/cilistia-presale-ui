@@ -37,7 +37,7 @@ const Timer = () => {
   }, [remainingSeconds, status]);
 
   return (
-    <p className='mt-2 text-3xl font-bold tracking-tight text-slate-300 sm:text-4xl'>
+    <p className='mt-2 text-3xl font-bold tracking-tight text-slate-300 sm:text-4xl text-center md:text-start'>
       {title() + ': ' + timeInfo}
     </p>
   );

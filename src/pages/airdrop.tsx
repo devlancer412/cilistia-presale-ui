@@ -44,11 +44,11 @@ const Airdrop = () => {
               <div className='lg:max-w-lg'>
                 <Timer />
                 {status === AirdropState.CLOSED && (
-                  <p className='mt-6 text-lg leading-8 text-gray-600'>
+                  <p className='mt-6 text-lg leading-8 text-gray-600 text-center md:text-start'>
                     Woops! Airdrop finished. You can buy token on Uniswap
                   </p>
                 )}
-                <p className='mt-6 text-lg leading-8 text-gray-600'>
+                <p className='mt-6 text-lg leading-8 text-gray-600 text-center md:text-start'>
                   {airdropWhitelisted
                     ? `You can take part in Cilistia's airdrop.\
                   Get Airdrop by Clicking Claim Button.`
