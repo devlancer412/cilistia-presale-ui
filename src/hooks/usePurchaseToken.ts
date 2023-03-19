@@ -7,9 +7,9 @@ import {
   useSigner,
 } from 'wagmi';
 import ERC20Abi from '@/contracts/abis/ERC20.json';
-import { PRESALE_CONTRACT_ADDRESS } from '@/constants';
+import { NETWORK, PRESALE_CONTRACT_ADDRESS } from '@/constants';
 import { BigNumber } from 'ethers';
-import { formatUnits, parseUnits } from 'ethers/lib/utils.js';
+import { parseUnits } from 'ethers/lib/utils.js';
 import { bnToNumber } from '@/utils/math';
 
 export const usePurchaseToken = (token: Token) => {
@@ -28,6 +28,7 @@ export const usePurchaseToken = (token: Token) => {
         ...contractConfig,
         functionName: 'allowance',
         args: [address, PRESALE_CONTRACT_ADDRESS],
+        chainId: NETWORK,
       },
     ],
     suspense: false,

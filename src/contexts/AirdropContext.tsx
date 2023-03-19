@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 import { BigNumber } from 'ethers';
-import { ADAY, HARD_CAP } from '@/constants';
+import { ADAY, NETWORK } from '@/constants';
 import { useCurrentTime } from '@/hooks/useCurrentTime';
 import {
   useAccount,
@@ -18,7 +18,7 @@ import {
 } from 'wagmi';
 
 import { contractConfig as airdropContractConfig } from '@/contracts/config/airdrop';
-import { formatUnits, parseUnits, splitSignature } from 'ethers/lib/utils.js';
+import { formatUnits, splitSignature } from 'ethers/lib/utils.js';
 import { getAirdropSignature } from '@/utils/app';
 
 export enum AirdropState {
@@ -48,23 +48,28 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
       {
         ...airdropContractConfig,
         functionName: 'openingTime',
+        chainId: NETWORK,
       },
       {
         ...airdropContractConfig,
         functionName: 'closingTime',
+        chainId: NETWORK,
       },
       {
         ...airdropContractConfig,
         functionName: 'claimAmountPerWallet',
+        chainId: NETWORK,
       },
       {
         ...airdropContractConfig,
         functionName: 'ogNumber',
+        chainId: NETWORK,
       },
       {
         ...airdropContractConfig,
         functionName: 'lastClaimedTime',
         args: [address],
+        chainId: NETWORK,
       },
     ],
     suspense: true,

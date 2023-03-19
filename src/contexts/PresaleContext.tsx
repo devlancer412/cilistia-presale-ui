@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 import { BigNumber } from 'ethers';
-import { HARD_CAP } from '@/constants';
+import { HARD_CAP, NETWORK } from '@/constants';
 import { useCurrentTime } from '@/hooks/useCurrentTime';
 import {
   useAccount,
@@ -49,18 +49,22 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
       {
         ...presaleContractConfig,
         functionName: 'openingTime',
+        chainId: NETWORK,
       },
       {
         ...presaleContractConfig,
         functionName: 'closingTime',
+        chainId: NETWORK,
       },
       {
         ...presaleContractConfig,
         functionName: 'balance',
+        chainId: NETWORK,
       },
       {
         ...presaleContractConfig,
         functionName: 'pricePerCIL',
+        chainId: NETWORK,
       },
     ],
     suspense: true,
