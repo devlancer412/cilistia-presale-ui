@@ -1,8 +1,9 @@
-import { createContext, PropsWithChildren, useEffect, useState } from 'react';
-import { useAccount } from 'wagmi';
-import gql from 'graphql-tag';
-import { getWhitelistStatus } from '@/utils/app';
-import { client } from '@/utils/apolloClient';
+import { createContext, PropsWithChildren, useEffect, useState } from "react";
+import { useAccount } from "wagmi";
+import gql from "graphql-tag";
+import { getWhitelistStatus } from "@/utils/app";
+import { client } from "@/utils/apolloClient";
+import { toast } from "react-hot-toast";
 
 export const AppStatsContext = createContext<AppStatsContextType | null>(null);
 
@@ -24,7 +25,7 @@ const AppStatsContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
       const { data } = await client.query({ query: query });
 
-      setTotalHolderCount(parseInt(data?.totalHolderCount?.value ?? '0'));
+      setTotalHolderCount(parseInt(data?.totalHolderCount?.value ?? "0"));
     } catch (err) {}
   };
 
@@ -40,8 +41,7 @@ const AppStatsContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
       })
       .catch((err: any) => {
         console.log(err);
-
-        // add error alert here
+        toast.error("Fetch whitelist failed");
       });
 
     refetch();
