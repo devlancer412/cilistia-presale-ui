@@ -1,5 +1,5 @@
 import { AirdropState } from '@/contexts/AirdropContext';
-import { useAirdrop, useAppStats } from '@/hooks';
+import { useAirdrop, useAppStats, useCurrentTime } from '@/hooks';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import {
@@ -8,6 +8,7 @@ import {
   StatusSkeleton,
   TimerSkeleton,
 } from '@/components/skeletion';
+import { useAirdropCountdown } from '@/hooks/useAirdropCountdown';
 
 const ClaimButton = dynamic(
   () => import('@/components/partials/airdrop/ClaimButton'),
@@ -38,7 +39,14 @@ const AirdropStatus = dynamic(
 );
 
 const Airdrop = () => {
-  const { status } = useAirdrop();
+  const { lastClaimedTime, openingTime, closingTime } = useAirdrop();
+  const currentTime = useCurrentTime();
+  const { status } = useAirdropCountdown(
+    currentTime,
+    lastClaimedTime,
+    closingTime,
+    openingTime
+  );
   const { airdropWhitelisted } = useAppStats();
 
   return (

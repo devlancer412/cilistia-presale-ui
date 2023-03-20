@@ -1,9 +1,17 @@
 import { useEffect, useState } from 'react';
 import { AirdropState } from '@/contexts/AirdropContext';
-import { useAirdrop } from '@/hooks';
+import { useAirdrop, useAirdropCountdown } from '@/hooks';
+import { useCurrentTime } from '@/hooks';
 
 const Timer = () => {
-  const { status, remainingSeconds } = useAirdrop();
+  const { lastClaimedTime, closingTime, openingTime } = useAirdrop();
+  const currentTime = useCurrentTime();
+  const { status, remainingSeconds } = useAirdropCountdown(
+    currentTime,
+    lastClaimedTime,
+    closingTime,
+    openingTime
+  );
   const [timeInfo, setTimeInfo] = useState('00:00:00:00');
 
   const title = () => {

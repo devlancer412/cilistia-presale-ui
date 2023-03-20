@@ -3,12 +3,19 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { ADAY } from '@/constants';
 import GradientSVG from '@/components/gradientSVG';
-import { useAirdrop, useCurrentTime } from '@/hooks';
+import { useAirdrop, useAirdropCountdown, useCurrentTime } from '@/hooks';
 import { formatAmountWithUnit } from '@/utils/math';
 
 const AirdropInfo = () => {
   const currentTime = useCurrentTime();
-  const { lastClaimedTime, claimAmountPerWallet, canClaim } = useAirdrop();
+  const { lastClaimedTime, claimAmountPerWallet, closingTime, openingTime } =
+    useAirdrop();
+  const { canClaim } = useAirdropCountdown(
+    currentTime,
+    lastClaimedTime,
+    closingTime,
+    openingTime
+  );
   const [timeInfo, setTimeInfo] = useState<string>('');
 
   const percentage = () => {

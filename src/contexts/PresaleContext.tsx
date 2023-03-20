@@ -1,14 +1,6 @@
-import {
-  createContext,
-  FC,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, FC, ReactNode, useCallback } from 'react';
 import { BigNumber } from 'ethers';
 import { HARD_CAP, NETWORK } from '@/constants';
-import { useCurrentTime } from '@/hooks/useCurrentTime';
 import {
   useAccount,
   useContract,
@@ -18,7 +10,7 @@ import {
 } from 'wagmi';
 
 import { contractConfig as presaleContractConfig } from '@/contracts/config/presale';
-import { formatUnits, parseUnits, splitSignature } from 'ethers/lib/utils.js';
+import { parseUnits, splitSignature } from 'ethers/lib/utils.js';
 import { getPresaleSignature } from '@/utils/app';
 import { bnToNumber } from '@/utils/math';
 
@@ -37,10 +29,6 @@ type Props = {
 };
 
 const PresaleContextProvider: FC<Props> = ({ children }) => {
-  const [status, setStatus] = useState<PresaleState>(PresaleState.NOT_STARTED);
-  const [remainingSeconds, setRemainingSeconds] = useState<number>(0);
-
-  const currentTime = useCurrentTime();
   const { data: signer } = useSigner();
   const { address } = useAccount();
 
@@ -138,30 +126,11 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
     },
   });
 
-  useEffect(() => {
-    if (!data) {
-      return;
-    }
-
-    if (currentTime < data.openingTime) {
-      setStatus(PresaleState.NOT_STARTED);
-      setRemainingSeconds(data.openingTime - currentTime);
-    } else if (
-      currentTime < data.closingTime &&
-      currentTime >= data.openingTime
-    ) {
-      setStatus(PresaleState.OPEN);
-      setRemainingSeconds(data.closingTime - currentTime);
-    } else {
-      setStatus(PresaleState.CLOSED);
-    }
-  }, [currentTime, data]);
-
   return (
     <PresaleContext.Provider
       value={{
-        status,
-        remainingSeconds,
+        openingTime: data?.openingTime,
+        closingTime: data?.closingTime,
         total: HARD_CAP,
         sold: data?.sold,
         price: data?.price,
