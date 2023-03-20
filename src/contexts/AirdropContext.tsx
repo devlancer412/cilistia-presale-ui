@@ -1,14 +1,6 @@
-import {
-  createContext,
-  FC,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, FC, ReactNode, useCallback, useState } from 'react';
 import { BigNumber } from 'ethers';
-import { ADAY, NETWORK } from '@/constants';
-import { useCurrentTime } from '@/hooks/useCurrentTime';
+import { NETWORK } from '@/constants';
 import {
   useAccount,
   useContract,
@@ -20,6 +12,7 @@ import {
 import { contractConfig as airdropContractConfig } from '@/contracts/config/airdrop';
 import { formatUnits, splitSignature } from 'ethers/lib/utils.js';
 import { getAirdropSignature } from '@/utils/app';
+import { toast } from 'react-hot-toast';
 
 export enum AirdropState {
   NOT_STARTED,
@@ -36,10 +29,6 @@ type Props = {
 };
 
 const AirdropContextProvider: FC<Props> = ({ children }) => {
-  const [status, setStatus] = useState<AirdropState>(AirdropState.NOT_STARTED);
-  const [remainingSeconds, setRemainingSeconds] = useState<number>(0);
-
-  const currentTime = useCurrentTime();
   const { data: signer } = useSigner();
   const { address } = useAccount();
 
@@ -92,6 +81,10 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
           lastClaimedTime: rawLastClaimedTime.toNumber(),
         };
       }
+
+      if (address) {
+        toast.error('Failed to fetch airdrop details');
+      }
     },
     onError: (err) => {
       console.log(err);
@@ -140,31 +133,11 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
     },
   });
 
-  useEffect(() => {
-    if (!data) {
-      return;
-    }
-
-    if (currentTime < data.openingTime) {
-      setStatus(AirdropState.NOT_STARTED);
-      setRemainingSeconds(data.openingTime - currentTime);
-    } else if (
-      currentTime < data.closingTime &&
-      currentTime >= data.openingTime
-    ) {
-      setStatus(AirdropState.OPEN);
-      setRemainingSeconds(data.closingTime - currentTime);
-    } else {
-      setStatus(AirdropState.CLOSED);
-    }
-  }, [currentTime, data]);
-
   return (
     <AirdropContext.Provider
       value={{
-        status,
-        remainingSeconds,
-        canClaim: currentTime > (data?.lastClaimedTime ?? 0) + ADAY,
+        openingTime: data?.openingTime,
+        closingTime: data?.closingTime,
         claimAmountPerWallet: data?.claimAmountPerWallet,
         ogNumber: data?.ogNumber,
         lastClaimedTime: data?.lastClaimedTime,

@@ -2,13 +2,20 @@ import { useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import { PurchaseModal } from '@/components/modals';
-import { usePresale, useAppStats } from '@/hooks';
+import {
+  usePresale,
+  useAppStats,
+  useCurrentTime,
+  usePresaleCountdown,
+} from '@/hooks';
 import { PresaleState } from '@/contexts/PresaleContext';
 
 const PurchaseButton = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { isConnected } = useAccount();
-  const { status } = usePresale();
+  const { closingTime, openingTime } = usePresale();
+  const currentTime = useCurrentTime();
+  const { status } = usePresaleCountdown(currentTime, closingTime, openingTime);
   const { presaleWhitelisted } = useAppStats();
 
   return (

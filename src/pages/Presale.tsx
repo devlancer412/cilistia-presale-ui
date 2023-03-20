@@ -5,7 +5,12 @@ import {
   TimerSkeleton,
 } from '@/components/skeletion';
 import { PresaleState } from '@/contexts/PresaleContext';
-import { usePresale, useAppStats } from '@/hooks';
+import {
+  usePresale,
+  useAppStats,
+  useCurrentTime,
+  usePresaleCountdown,
+} from '@/hooks';
 import dynamic from 'next/dynamic';
 
 const PurchaseButton = dynamic(
@@ -37,7 +42,9 @@ const PresaleStatus = dynamic(
 );
 
 const Presale = () => {
-  const { status } = usePresale();
+  const { closingTime, openingTime } = usePresale();
+  const currentTime = useCurrentTime();
+  const { status } = usePresaleCountdown(currentTime, closingTime, openingTime);
   const { presaleWhitelisted } = useAppStats();
 
   return (
