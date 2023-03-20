@@ -93,12 +93,11 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
           lastClaimedTime: rawLastClaimedTime.toNumber(),
         };
       } else {
-        throw Error("Airdrop multicall failed");
+        toast.error("Failed to fetch airdrop details");
       }
     },
     onError: (err) => {
       console.log(err);
-      toast.error("Failed to fetch airdrop details");
     },
     allowFailure: true,
   });

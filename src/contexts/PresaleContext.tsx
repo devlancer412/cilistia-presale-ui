@@ -84,12 +84,11 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
           price: bnToNumber(rawPrice, 2),
         };
       } else {
-        throw Error("Presale multicall failed");
+        toast.error("Failed to fetch presale details");
       }
     },
     onError: (err) => {
       console.log(err);
-      toast.error("Failed to fetch presale details");
     },
     allowFailure: true,
   });
