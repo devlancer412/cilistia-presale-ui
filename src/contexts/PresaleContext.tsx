@@ -5,22 +5,23 @@ import {
   useCallback,
   useEffect,
   useState,
-} from 'react';
-import { BigNumber } from 'ethers';
-import { HARD_CAP, NETWORK } from '@/constants';
-import { useCurrentTime } from '@/hooks/useCurrentTime';
+} from "react";
+import { BigNumber } from "ethers";
+import { HARD_CAP, NETWORK } from "@/constants";
+import { useCurrentTime } from "@/hooks/useCurrentTime";
 import {
   useAccount,
   useContract,
   useContractEvent,
   useContractReads,
   useSigner,
-} from 'wagmi';
+} from "wagmi";
 
-import { contractConfig as presaleContractConfig } from '@/contracts/config/presale';
-import { formatUnits, parseUnits, splitSignature } from 'ethers/lib/utils.js';
-import { getPresaleSignature } from '@/utils/app';
-import { bnToNumber } from '@/utils/math';
+import { contractConfig as presaleContractConfig } from "@/contracts/config/presale";
+import { formatUnits, parseUnits, splitSignature } from "ethers/lib/utils.js";
+import { getPresaleSignature } from "@/utils/app";
+import { bnToNumber } from "@/utils/math";
+import { toast } from "react-hot-toast";
 
 export enum PresaleState {
   NOT_STARTED,
@@ -48,22 +49,22 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
     contracts: [
       {
         ...presaleContractConfig,
-        functionName: 'openingTime',
+        functionName: "openingTime",
         chainId: NETWORK,
       },
       {
         ...presaleContractConfig,
-        functionName: 'closingTime',
+        functionName: "closingTime",
         chainId: NETWORK,
       },
       {
         ...presaleContractConfig,
-        functionName: 'balance',
+        functionName: "balance",
         chainId: NETWORK,
       },
       {
         ...presaleContractConfig,
-        functionName: 'pricePerCIL',
+        functionName: "pricePerCIL",
         chainId: NETWORK,
       },
     ],
@@ -82,10 +83,13 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
           sold: HARD_CAP - bnToNumber(rawBalance),
           price: bnToNumber(rawPrice, 2),
         };
+      } else {
+        throw Error("Presale multicall failed");
       }
     },
     onError: (err) => {
       console.log(err);
+      toast.error("Failed to fetch presale details");
     },
     allowFailure: true,
   });
@@ -98,7 +102,7 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
   const purchase = useCallback(
     async (amount: number, token: Token) => {
       if (!address || !presaleContract) {
-        throw Error('Please connect your wallet');
+        throw Error("Please connect your wallet");
       }
 
       try {
@@ -132,7 +136,7 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
 
   useContractEvent({
     ...presaleContractConfig,
-    eventName: 'Buy',
+    eventName: "Buy",
     listener(_executor, _tokenNameToDeposit, _deposit, _withdraw) {
       refetch();
     },
