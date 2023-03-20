@@ -11,8 +11,8 @@ type SignatureRes = {
 };
 
 interface PresaleContextType {
-  status: PresaleState;
-  remainingSeconds: number;
+  openingTime?: number;
+  closingTime?: number;
   total: number;
   sold?: number;
   price?: number;
@@ -27,9 +27,8 @@ interface AppStatsContextType {
 }
 
 interface AirdropContextType {
-  status: AirdropStatus;
-  remainingSeconds: number;
-  canClaim: boolean;
+  openingTime?: number;
+  closingTime?: number;
   claimAmountPerWallet?: number;
   ogNumber?: number;
   lastClaimedTime?: number;

@@ -1,9 +1,17 @@
 import { useEffect, useState } from 'react';
 import { PresaleState } from '@/contexts/PresaleContext';
 import { usePresale } from '@/hooks';
+import { usePresaleCountdown } from '@/hooks/usePresaleCountdown';
+import { useCurrentTime } from '@/hooks';
 
 const Timer = () => {
-  const { status, remainingSeconds } = usePresale();
+  const { closingTime, openingTime } = usePresale();
+  const currentTime = useCurrentTime();
+  const { status, remainingSeconds } = usePresaleCountdown(
+    currentTime,
+    closingTime,
+    openingTime
+  );
   const [timeInfo, setTimeInfo] = useState('00:00:00:00');
 
   const title = () => {
