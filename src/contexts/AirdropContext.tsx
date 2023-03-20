@@ -5,22 +5,21 @@ import {
   useCallback,
   useEffect,
   useState,
-} from "react";
-import { BigNumber } from "ethers";
-import { ADAY, NETWORK } from "@/constants";
-import { useCurrentTime } from "@/hooks/useCurrentTime";
+} from 'react';
+import { BigNumber } from 'ethers';
+import { ADAY, NETWORK } from '@/constants';
+import { useCurrentTime } from '@/hooks/useCurrentTime';
 import {
   useAccount,
   useContract,
   useContractEvent,
   useContractReads,
   useSigner,
-} from "wagmi";
+} from 'wagmi';
 
-import { contractConfig as airdropContractConfig } from "@/contracts/config/airdrop";
-import { formatUnits, splitSignature } from "ethers/lib/utils.js";
-import { getAirdropSignature } from "@/utils/app";
-import { toast } from "react-hot-toast";
+import { contractConfig as airdropContractConfig } from '@/contracts/config/airdrop';
+import { formatUnits, splitSignature } from 'ethers/lib/utils.js';
+import { getAirdropSignature } from '@/utils/app';
 
 export enum AirdropState {
   NOT_STARTED,
@@ -48,27 +47,27 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
     contracts: [
       {
         ...airdropContractConfig,
-        functionName: "openingTime",
+        functionName: 'openingTime',
         chainId: NETWORK,
       },
       {
         ...airdropContractConfig,
-        functionName: "closingTime",
+        functionName: 'closingTime',
         chainId: NETWORK,
       },
       {
         ...airdropContractConfig,
-        functionName: "claimAmountPerWallet",
+        functionName: 'claimAmountPerWallet',
         chainId: NETWORK,
       },
       {
         ...airdropContractConfig,
-        functionName: "ogNumber",
+        functionName: 'ogNumber',
         chainId: NETWORK,
       },
       {
         ...airdropContractConfig,
-        functionName: "lastClaimedTime",
+        functionName: 'lastClaimedTime',
         args: [address],
         chainId: NETWORK,
       },
@@ -92,8 +91,6 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
           ),
           lastClaimedTime: rawLastClaimedTime.toNumber(),
         };
-      } else {
-        toast.error("Failed to fetch airdrop details");
       }
     },
     onError: (err) => {
@@ -109,7 +106,7 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
 
   const claim = useCallback(async () => {
     if (!address || !airdropContract) {
-      throw Error("Please connect your wallet");
+      throw Error('Please connect your wallet');
     }
 
     try {
@@ -135,7 +132,7 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
 
   useContractEvent({
     ...airdropContractConfig,
-    eventName: "Claimed",
+    eventName: 'Claimed',
     listener(to, amount) {
       if (to == address) {
         refetch();
