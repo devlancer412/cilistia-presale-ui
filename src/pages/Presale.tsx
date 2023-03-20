@@ -1,3 +1,9 @@
+import {
+  InfoSkeleton,
+  ButtonSkeleton,
+  StatusSkeleton,
+  TimerSkeleton,
+} from '@/components/skeletion';
 import { PresaleState } from '@/contexts/PresaleContext';
 import { usePresale, useAppStats } from '@/hooks';
 import dynamic from 'next/dynamic';
@@ -6,23 +12,27 @@ const PurchaseButton = dynamic(
   () => import('@/components/partials/presale/PurchaseButton'),
   {
     ssr: false,
+    loading: () => <ButtonSkeleton />,
   }
 );
 
 const Timer = dynamic(() => import('@/components/partials/presale/Timer'), {
   ssr: false,
+  loading: () => <TimerSkeleton />,
 });
 
 const PresaleInfo = dynamic(
   () => import('@/components/partials/presale/PresaleInfo'),
   {
     ssr: false,
+    loading: () => <InfoSkeleton />,
   }
 );
 const PresaleStatus = dynamic(
   () => import('@/components/partials/presale/PresaleStatus'),
   {
     ssr: false,
+    loading: () => <StatusSkeleton />,
   }
 );
 
@@ -56,7 +66,13 @@ const Presale = () => {
         </div>
       </div>
       {/* Presale Stats Here */}
-      <PresaleStatus />
+      <div className='!pt-4 bg-gray-900 pb-4'>
+        <div className='px-6 mx-auto max-w-7xl lg:px-8'>
+          <div className='max-w-2xl mx-auto lg:max-w-none'>
+            <PresaleStatus />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

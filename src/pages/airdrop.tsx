@@ -2,28 +2,38 @@ import { AirdropState } from '@/contexts/AirdropContext';
 import { useAirdrop, useAppStats } from '@/hooks';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
+import {
+  ButtonSkeleton,
+  InfoSkeleton,
+  StatusSkeleton,
+  TimerSkeleton,
+} from '@/components/skeletion';
 
 const ClaimButton = dynamic(
   () => import('@/components/partials/airdrop/ClaimButton'),
   {
     ssr: false,
+    loading: () => <ButtonSkeleton />,
   }
 );
 
 const Timer = dynamic(() => import('@/components/partials/airdrop/Timer'), {
   ssr: false,
+  loading: () => <TimerSkeleton />,
 });
 
 const AirdropInfo = dynamic(
   () => import('@/components/partials/airdrop/AirdropInfo'),
   {
     ssr: false,
+    loading: () => <InfoSkeleton />,
   }
 );
 const AirdropStatus = dynamic(
   () => import('@/components/partials/airdrop/AirdropStatus'),
   {
     ssr: false,
+    loading: () => <StatusSkeleton />,
   }
 );
 
@@ -62,7 +72,13 @@ const Airdrop = () => {
           </div>
         </div>
         {/* Airdrop Stats Here */}
-        <AirdropStatus />
+        <div className='!pt-4 bg-gray-900 pb-4'>
+          <div className='px-6 mx-auto max-w-7xl lg:px-8'>
+            <div className='max-w-2xl mx-auto lg:max-w-none'>
+              <AirdropStatus />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
