@@ -30,31 +30,42 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
   };
 
   const handleApprove = async () => {
+    const toastId = toast.loading(
+      `Approving ${selectedToken.symbol} for spend`
+    );
     try {
       setIsWaiting(true);
       const tx = await approve(amount);
       await tx.wait();
-
-      toast.success('Token approved for transaction');
-    } catch (err) {
-      console.log(err);
-      toast.error('Approval failed');
+      toast.dismiss(toastId);
+      toast.success(`${selectedToken.symbol} approved for transaction`);
+    } catch (err: any) {
+      const errorMsg = err?.reason ? err.reason : 'Approval failed';
+      toast.dismiss(toastId);
+      toast.error(errorMsg);
     } finally {
       setIsWaiting(false);
     }
   };
 
   const handlePurchase = async () => {
+    if (amount > balance) {
+      toast.error(`Insufficient ${selectedToken.symbol}`);
+      return;
+    }
+    const toastId = toast.loading(
+      `Purchasing ${amount} ${selectedToken.symbol} of CIL`
+    );
     try {
       setIsWaiting(true);
       const tx = await purchase(amount, selectedToken);
       await tx.wait();
-
+      toast.dismiss(toastId);
       toast.success('Purchase successful');
-    } catch (err) {
-      console.log(err);
-
-      toast.error('Purchase failed');
+    } catch (err: any) {
+      const errorMsg = err?.reason ? err.reason : 'Purchase failed';
+      toast.dismiss(toastId);
+      toast.error(errorMsg);
     } finally {
       setIsWaiting(false);
     }
@@ -106,10 +117,14 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
         </div>
         <button
           className='bg-blue px-7 py-3 rounded-lg mt-2 disabled:opacity-50 disabled:cursor-not-allowed'
-          disabled={status !== PresaleState.OPEN || isWaiting}
-          onClick={allowance >= amount ? handlePurchase : handleApprove}
+          disabled={status !== PresaleState.OPEN || isWaiting || !amount}
+          onClick={
+            allowance > 0 && allowance >= amount
+              ? handlePurchase
+              : handleApprove
+          }
         >
-          {allowance >= amount
+          {allowance > 0 && allowance >= amount
             ? isWaiting
               ? 'Purchasing...'
               : 'Purchase'
