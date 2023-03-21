@@ -13,6 +13,7 @@ import { contractConfig as presaleContractConfig } from '@/contracts/config/pres
 import { parseUnits, splitSignature } from 'ethers/lib/utils.js';
 import { getPresaleSignature } from '@/utils/app';
 import { bnToNumber } from '@/utils/math';
+import { toast } from 'react-hot-toast';
 
 export enum PresaleState {
   NOT_STARTED,
@@ -122,6 +123,10 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
     ...presaleContractConfig,
     eventName: 'Buy',
     listener(_executor, _tokenNameToDeposit, _deposit, _withdraw) {
+      const truncatedAddress = (_executor as string).slice(0, 4) + '...';
+      toast.success(
+        `${truncatedAddress} purchased ${bnToNumber(_withdraw as BigNumber)}CIL`
+      );
       refetch();
     },
   });

@@ -13,6 +13,7 @@ import { contractConfig as airdropContractConfig } from '@/contracts/config/aird
 import { formatUnits, splitSignature } from 'ethers/lib/utils.js';
 import { getAirdropSignature } from '@/utils/app';
 import { toast } from 'react-hot-toast';
+import { bnToNumber } from '@/utils/math';
 
 export enum AirdropState {
   NOT_STARTED,
@@ -129,6 +130,11 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
     listener(to, amount) {
       if (to == address) {
         refetch();
+      } else {
+        const truncatedAddress = (address as string).slice(0, 4) + '...';
+        toast.success(
+          `${truncatedAddress} claimed ${bnToNumber(amount as BigNumber)}CIL`
+        );
       }
     },
   });
