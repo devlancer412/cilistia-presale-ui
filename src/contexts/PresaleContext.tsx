@@ -125,7 +125,9 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
     listener(_executor, _tokenNameToDeposit, _deposit, _withdraw) {
       const truncatedAddress = (_executor as string).slice(0, 4) + '...';
       toast.success(
-        `${truncatedAddress} purchased ${bnToNumber(_withdraw as BigNumber)}CIL`
+        `${truncatedAddress} purchased ${bnToNumber(
+          _withdraw as BigNumber
+        ).toFixed(2)} CIL`
       );
       refetch();
     },

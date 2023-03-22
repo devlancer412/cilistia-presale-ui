@@ -133,7 +133,9 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
       } else {
         const truncatedAddress = (address as string).slice(0, 4) + '...';
         toast.success(
-          `${truncatedAddress} claimed ${bnToNumber(amount as BigNumber)}CIL`
+          `${truncatedAddress} claimed ${bnToNumber(
+            amount as BigNumber
+          ).toFixed(2)} CIL`
         );
       }
     },
