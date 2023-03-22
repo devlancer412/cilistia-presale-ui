@@ -11,6 +11,22 @@ import { PresaleState } from '@/contexts/PresaleContext';
 import { formatAmountWithUnit } from '@/utils/math';
 import { toast } from 'react-hot-toast';
 
+function determinButtonText(
+  allowance: number,
+  amount: number,
+  isWaiting: boolean
+) {
+  if (amount === 0) {
+    return 'Invalid Purchase Amount';
+  }
+
+  if (allowance > 0 && allowance >= amount) {
+    return isWaiting ? 'Purchasing...' : 'Purchase';
+  }
+
+  return isWaiting ? 'Approving...' : 'Approve';
+}
+
 interface Props {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
@@ -124,13 +140,7 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
               : handleApprove
           }
         >
-          {allowance > 0 && allowance >= amount
-            ? isWaiting
-              ? 'Purchasing...'
-              : 'Purchase'
-            : isWaiting
-            ? 'Approving...'
-            : 'Approve'}
+          {determinButtonText(allowance, amount, isWaiting)}
         </button>
       </div>
     </ModalWrapper>
