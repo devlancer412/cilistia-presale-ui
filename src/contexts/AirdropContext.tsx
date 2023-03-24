@@ -1,4 +1,11 @@
-import { createContext, FC, ReactNode, useCallback } from 'react';
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { BigNumber } from 'ethers';
 import { NETWORK } from '@/constants';
 import {
@@ -44,14 +51,17 @@ type Props = {
   children: ReactNode;
 };
 
-const AirdropContextProvider: FC<Props> = ({ children, ...others }) => {
-  // @ts-ignore
-  const route = children?._owner?.pendingProps?.router?.state?.route as string;
-  console.log('route', children);
-  console.log('otheres', others);
-  const airdropType: AirdropType = route?.includes('/og')
-    ? AirdropType.OG
-    : AirdropType.TRUE_OG;
+const AirdropContextProvider: FC<Props> = ({ children }) => {
+  const [airdropType, setAirdropType] = useState<AirdropType>(AirdropType.OG);
+
+  useEffect(() => {
+    if (window) {
+      const adType: AirdropType = window?.location?.href?.includes('/og')
+        ? AirdropType.OG
+        : AirdropType.TRUE_OG;
+      setAirdropType(adType);
+    }
+  });
 
   const airdropContractConfig =
     airdropType === AirdropType.OG
