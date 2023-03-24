@@ -9,8 +9,8 @@ export const AppStatsContext = createContext<AppStatsContextType | null>(null);
 
 const AppStatsContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const { address } = useAccount();
-  const [presaleWhitelisted, setPresaleWhitelisted] = useState<boolean>(false);
   const [airdropWhitelisted, setAirdropWhitelisted] = useState<boolean>(false);
+  const [trueOgAirdropWhitelisted, setTrueOgAirdropWhitelisted] = useState<boolean>(false);
   const [totalHolderCount, setTotalHolderCount] = useState<number>();
 
   const refetch = async () => {
@@ -36,8 +36,8 @@ const AppStatsContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
     getWhitelistStatus(address)
       .then((res) => {
-        setPresaleWhitelisted(res.presale);
-        setAirdropWhitelisted(res.airdrop);
+        setAirdropWhitelisted(res.ogAirdrop);
+        setTrueOgAirdropWhitelisted(res.trueOgAirdrop);
       })
       .catch((err: any) => {
         console.log(err);
@@ -50,8 +50,9 @@ const AppStatsContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <AppStatsContext.Provider
       value={{
-        presaleWhitelisted,
+        presaleWhitelisted: true,
         airdropWhitelisted,
+        trueOgAirdropWhitelisted,
         totalHolderCount,
         refetch,
       }}
