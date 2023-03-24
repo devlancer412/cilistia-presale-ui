@@ -131,6 +131,7 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
       );
       refetch();
     },
+    chainId: NETWORK,
   });
 
   return (

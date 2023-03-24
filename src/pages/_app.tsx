@@ -27,6 +27,8 @@ const APP_NAME = 'CIL Presale';
 const ALCHEMY_API_KEY =
   process.env.NEXT_PUBLIC_ALCHEMY_KEY ?? 'gRk6Rk7lqJsLeybRhCGlyL2LMGD8-CLf';
 
+console.log(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true');
+
 const { chains, provider, webSocketProvider } = configureChains(
   [
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'

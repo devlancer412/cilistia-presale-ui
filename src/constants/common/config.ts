@@ -15,4 +15,6 @@ const EXPLORER_RECORDS: Record<number, string> = {
 
 const NETWORK = Number(process.env.NEXT_PUBLIC_CHAIN_ID ?? 5);
 
+console.log(NETWORK);
+
 export { PROVIDER_RECORDS, EXPLORER_RECORDS, NETWORK };

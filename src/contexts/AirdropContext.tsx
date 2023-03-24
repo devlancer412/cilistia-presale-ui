@@ -176,6 +176,7 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
         );
       }
     },
+    chainId: NETWORK,
   });
 
   return (

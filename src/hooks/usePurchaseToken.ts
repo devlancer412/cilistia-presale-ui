@@ -63,6 +63,7 @@ export const usePurchaseToken = (token: Token) => {
         refetch();
       }
     },
+    chainId: NETWORK,
   });
 
   useContractEvent({
@@ -73,6 +74,7 @@ export const usePurchaseToken = (token: Token) => {
         refetch();
       }
     },
+    chainId: NETWORK,
   });
 
   const contract = useContract({

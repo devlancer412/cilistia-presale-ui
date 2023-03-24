@@ -1,5 +1,5 @@
 import { useBalance, useAccount, useContractEvent } from 'wagmi';
-import { CIL_TOKEN } from '@/constants';
+import { CIL_TOKEN, NETWORK } from '@/constants';
 import { formatAmountWithUnit } from '@/utils/math';
 import ERC20Abi from '@/contracts/abis/ERC20.json';
 import { useAppStats } from '@/hooks';
@@ -7,10 +7,12 @@ import { useAppStats } from '@/hooks';
 const CILBalance = () => {
   const { address } = useAccount();
   const { refetch: refetchHolderCount } = useAppStats();
+
   const { data, isError, refetch } = useBalance({
     address,
     token: CIL_TOKEN.address,
     suspense: true,
+    chainId: NETWORK,
   });
 
   useContractEvent({
@@ -23,6 +25,7 @@ const CILBalance = () => {
       }
       setTimeout(() => refetchHolderCount(), 1000);
     },
+    chainId: NETWORK,
   });
 
   if (isError) {
