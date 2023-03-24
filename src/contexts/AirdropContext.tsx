@@ -44,10 +44,11 @@ type Props = {
   children: ReactNode;
 };
 
-const AirdropContextProvider: FC<Props> = ({ children }) => {
+const AirdropContextProvider: FC<Props> = ({ children, ...others }) => {
   // @ts-ignore
   const route = children?._owner?.pendingProps?.router?.state?.route as string;
-  console.log('route', route);
+  console.log('route', children);
+  console.log('otheres', others);
   const airdropType: AirdropType = route?.includes('/og')
     ? AirdropType.OG
     : AirdropType.TRUE_OG;
