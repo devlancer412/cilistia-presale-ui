@@ -16,7 +16,7 @@ const AirdropStatus = () => {
   const currentTime = useCurrentTime();
   const { claimAmountPerWallet, lastClaimedTime, openingTime, closingTime } =
     useAirdrop();
-  const { canClaim } = useAirdropCountdown(
+  const { status } = useAirdropCountdown(
     currentTime,
     lastClaimedTime,
     closingTime,
@@ -60,7 +60,7 @@ const AirdropStatus = () => {
           Next Claim
         </dt>
         <dd className='order-first text-2xl font-semibold tracking-tight text-white'>
-          {canClaim
+          {status == AirdropState.OPEN
             ? lastClaimedTime !== undefined
               ? currentTime > lastClaimedTime + ADAY
                 ? 'Available Now'
