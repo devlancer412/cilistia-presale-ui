@@ -1,6 +1,6 @@
 import { TRUE_OG_AIRDROP_WHITELIST_RECORDS } from './whitelists';
 
-const TRUE_OG_AIRDROP_CONTRACT_ADDRESS_RECORDS: Record<number, `0x${string}`> =
+const TRUE_OG_AIRDROP_CONTRACT_ADDRESS_RECORDS: Record<number, `0x${string}`> = 
   {
     42161: '0x9a9e42ca301A9cD2D390b5a7Ff9E8C4c8a7Ef93B',
     1337: '0xc78729061c78bbf25f415890ba3cf59d9bdd5c37',

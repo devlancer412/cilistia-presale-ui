@@ -18,7 +18,7 @@ import {
 
 import { contractConfig as ogAirdropContractConfig } from '@/contracts/config/ogAirdrop';
 
-import { contractConfig as trueOgAirdropContractConfig } from '@/contracts/config/ogAirdrop';
+import { contractConfig as trueOgAirdropContractConfig } from '@/contracts/config/trueOgAirdrop';
 import { formatUnits, splitSignature } from 'ethers/lib/utils.js';
 import { getAirdropSignature } from '@/utils/app';
 import { AirdropType } from '@/utils/api';
