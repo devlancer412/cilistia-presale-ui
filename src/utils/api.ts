@@ -40,10 +40,6 @@ export const getPresaleSignature = async (
   amount: string,
   tokenSymbol: string
 ) => {
-  if (!isPresaleWhitelisted(address)) {
-    return { result: true, error: 'Not whitelisted' };
-  }
-
   const messageHash = utils.solidityKeccak256(
     ['address', 'uint256', 'string'],
     [address, amount, tokenSymbol]

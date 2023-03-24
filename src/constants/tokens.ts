@@ -25,12 +25,12 @@ const ACCEPTED_TOKENS_RECORDS: Record<number, Token[]> = {
   ],
   5: [
     {
-      address: '0xEB590e5A96CD0E943A0899412E4fB06e0B362a7f',
+      address: '0x59109132DcbF98Df1F97F0EB4E6165b182F26c52',
       decimals: 6,
       symbol: 'USDC',
     },
     {
-      address: '0x94aD46632DDDF560b20bec57F6Aeed8AD9CF7561',
+      address: '0x17BC4D58c9e9EDCcCBB29b4c18b151dDbaa42a18',
       decimals: 6,
       symbol: 'USDT',
     },
@@ -61,7 +61,7 @@ const CIL_TOKEN_RECORDS: Record<number, Token> = {
     symbol: 'CIL',
   },
   5: {
-    address: '0x54D8b98FA53ce1637FC3E204892cDee18C197572',
+    address: '0xF39cf81C5172C78B78a3B84873A56394CFCcfB4e',
     decimals: 18,
     symbol: 'CIL',
   },
