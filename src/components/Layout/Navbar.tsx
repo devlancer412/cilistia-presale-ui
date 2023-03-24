@@ -11,7 +11,7 @@ const DynamicCILBalance = dynamic(() => import("./CILBalance"), {
 });
 
 const navigation = [
-  { name: "Presale", href: "/" },
+  { name: "Presale", href: "/presale" },
   {
     name: "Airdrop",
     children: [
