@@ -126,7 +126,11 @@ const Navbar = () => {
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
-            onClick={() => setMobileMenuOpen(true)}
+            onClick={() => {
+              console.log('open sesame', mobileMenuOpen);
+              setMobileMenuOpen(true);
+              console.log('close sesame', mobileMenuOpen);
+            }}
           >
             <span className="sr-only">Open main menu</span>
             <Bars3Icon className="w-6 h-6" aria-hidden="true" />
