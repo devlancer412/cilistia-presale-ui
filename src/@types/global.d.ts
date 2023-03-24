@@ -27,6 +27,7 @@ interface AppStatsContextType {
 }
 
 interface AirdropContextType {
+  airdropType?: string;
   airdropTitle: string;
   openingTime?: number;
   closingTime?: number;
