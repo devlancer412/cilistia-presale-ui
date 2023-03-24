@@ -181,6 +181,7 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
   return (
     <AirdropContext.Provider
       value={{
+        airdropType,
         airdropTitle: getAirdropTitle(airdropType),
         openingTime: data?.openingTime,
         closingTime: data?.closingTime,
