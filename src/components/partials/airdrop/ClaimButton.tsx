@@ -9,11 +9,12 @@ import {
 } from "@/hooks";
 import { AirdropState } from "@/contexts/AirdropContext";
 import { toast } from "react-hot-toast";
+import { AirdropType } from '@/utils/api';
 
 const ClaimButton = () => {
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
   const { isConnected } = useAccount();
-  const { claim, openingTime, lastClaimedTime, closingTime } = useAirdrop();
+  const { claim, openingTime, lastClaimedTime, closingTime, airdropType } = useAirdrop();
   const currentTime = useCurrentTime();
   const { status, canClaim } = useAirdropCountdown(
     currentTime,
@@ -21,7 +22,9 @@ const ClaimButton = () => {
     closingTime,
     openingTime
   );
-  const { airdropWhitelisted } = useAppStats();
+  const { airdropWhitelisted: ogAirdropWhitelisted, trueOgAirdropWhitelisted } = useAppStats();
+  
+  const airdropWhitelisted = airdropType === AirdropType.OG ? ogAirdropWhitelisted : trueOgAirdropWhitelisted;
 
   const handleClaim = async () => {
     const toastId = toast.loading(`Claiming airdrop`);
