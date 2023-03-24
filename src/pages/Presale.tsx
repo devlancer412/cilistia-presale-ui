@@ -51,7 +51,7 @@ const Presale = () => {
   return (
     <>
       <Head>
-        <title>OG Airdrop  | Cilistia</title>
+        <title>Presale  | Cilistia</title>
         <meta
           name="description"
           content="Take part in the Cilistia $CIL token sale."
