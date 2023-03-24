@@ -31,14 +31,17 @@ const DropdownMenu = ({ navs }: any) => {
   return (
     <div className='relative group'>
       <div className='text-sm font-semibold leading-6 text-white hover:text-slate-300'>
-        Airdrop
+        Airdrop{' '}
+        <span className='text-sm inline-block rotate-180 -translate-y-0.5 scale-110'>
+          ^
+        </span>
       </div>
-      <ul className='hidden absolute group-hover:block translate-x-3'>
+      <ul className='hidden absolute group-hover:block bg-sky-500/[.06] px-4 py-2 border border-solid border-indigo-500 rounded-md'>
         {navs.map((nav: any) => (
-          <li className='list-disc text-white' key={nav.name}>
+          <li key={nav.name}>
             <Link
               href={nav.href}
-              className='text-xs whitespace-nowrap font-semibold leading-6 text-white hover:text-slate-300'
+              className='text-xs whitespace-nowrap font-semibold leading-6 text-white hover:text-indigo-300'
             >
               {nav.name}
             </Link>
@@ -53,7 +56,10 @@ const MobileDropdownMenu = ({ navs, setMobileMenuOpen }: any) => {
   return (
     <div className='relative group'>
       <div className='block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-white rounded-lg hover:bg-gray-800'>
-        Airdrop
+        Airdrop{' '}
+        <span className='text-base inline-block rotate-180 -translate-y-0.5 scale-110'>
+          ^
+        </span>
       </div>
       <ul className='hidden absolute group-hover:block translate-x-3'>
         {navs.map((nav: any) => (
