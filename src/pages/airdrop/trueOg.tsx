@@ -47,7 +47,7 @@ const Airdrop = () => {
     closingTime,
     openingTime
   );
-  const { airdropWhitelisted } = useAppStats();
+  const { trueOgAirdropWhitelisted } = useAppStats();
 
   return (
     <>
@@ -67,7 +67,7 @@ const Airdrop = () => {
                   </p>
                 )}
                 <p className='mt-6 text-lg leading-8 text-center text-gray-600 md:text-start'>
-                  {airdropWhitelisted
+                  {trueOgAirdropWhitelisted
                     ? `You are eligible to claim the TRUE OG Airdrop!\
                   Get TRUE OG Airdrop by Clicking Claim Button.`
                     : `In order to participate in Cilistia's TRUE OG Airdrop your wallet\
