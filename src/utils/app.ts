@@ -37,7 +37,7 @@ export const getAirdropSignature = async (
   address: `0x${string}`,
   type: AirdropType
 ): Promise<SignatureRes> => {
-  const res = await fetch(`/api/signAirdrop?address=${address}?type=${type}`);
+  const res = await fetch(`/api/signAirdrop?address=${address}&type=${type}`);
   const data = await res.json();
 
   return data;
