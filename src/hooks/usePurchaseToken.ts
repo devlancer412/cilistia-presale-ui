@@ -23,7 +23,12 @@ export const usePurchaseToken = (token: Token) => {
 
   const { data, refetch } = useContractReads({
     contracts: [
-      { ...contractConfig, functionName: 'balanceOf', args: [address] },
+      {
+        ...contractConfig,
+        functionName: 'balanceOf',
+        args: [address],
+        chainId: NETWORK,
+      },
       {
         ...contractConfig,
         functionName: 'allowance',
