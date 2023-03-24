@@ -30,8 +30,8 @@ const ALCHEMY_API_KEY =
 const { chains, provider, webSocketProvider } = configureChains(
   [
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true'
-      ? [arbitrum]
-      : [goerli]),
+      ? [goerli]
+      : [arbitrum]),
   ],
   [
     // alchemyProvider({
