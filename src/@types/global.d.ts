@@ -20,6 +20,7 @@ interface PresaleContextType {
 }
 
 interface AppStatsContextType {
+  trueOgAirdropWhitelisted: boolean;
   presaleWhitelisted: boolean;
   airdropWhitelisted: boolean;
   totalHolderCount?: number;
