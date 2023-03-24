@@ -5,7 +5,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/airdrop/og',
+        destination: '/presale',
         permanent: true,
       },
     ];
