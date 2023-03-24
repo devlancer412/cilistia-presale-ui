@@ -9,6 +9,7 @@ import {
 import { PRESALE_CONTRACT_ADDRESS, CIL_TOKEN } from '@/constants';
 import ERC20_ABI from '@/contracts/abis/ERC20.json';
 import PRESALE_ABI from '@/contracts/abis/Presale.json';
+import { AirdropType } from './api';
 
 export const getWhitelistStatus = async (
   address: `0x${string}`
@@ -33,9 +34,10 @@ export const getPresaleSignature = async (
 };
 
 export const getAirdropSignature = async (
-  address: `0x${string}`
+  address: `0x${string}`,
+  type: AirdropType
 ): Promise<SignatureRes> => {
-  const res = await fetch(`/api/signAirdrop?address=${address}`);
+  const res = await fetch(`/api/signAirdrop?address=${address}?type=${type}`);
   const data = await res.json();
 
   return data;

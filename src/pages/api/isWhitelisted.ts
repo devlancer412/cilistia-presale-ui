@@ -1,10 +1,15 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { isPresaleWhitelisted, isAirdropWhitelisted } from '@/utils/api';
+import {
+  isPresaleWhitelisted,
+  isAirdropWhitelisted,
+  AirdropType,
+} from '@/utils/api';
 
 type Data = {
   presale: boolean;
-  airdrop: boolean;
+  ogAirdrop: boolean;
+  trueOgAirdrop: boolean;
 };
 
 export default function handler(
@@ -15,6 +20,7 @@ export default function handler(
 
   res.status(200).json({
     presale: isPresaleWhitelisted(address),
-    airdrop: isAirdropWhitelisted(address),
+    ogAirdrop: isAirdropWhitelisted(address, AirdropType.OG),
+    trueOgAirdrop: isAirdropWhitelisted(address, AirdropType.TRUE_OG),
   });
 }

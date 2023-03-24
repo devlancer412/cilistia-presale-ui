@@ -4,7 +4,8 @@ import { useAirdrop, useAirdropCountdown } from '@/hooks';
 import { useCurrentTime } from '@/hooks';
 
 const Timer = () => {
-  const { lastClaimedTime, closingTime, openingTime } = useAirdrop();
+  const { lastClaimedTime, closingTime, openingTime, airdropTitle } =
+    useAirdrop();
   const currentTime = useCurrentTime();
   const { status, remainingSeconds } = useAirdropCountdown(
     currentTime,
@@ -15,9 +16,11 @@ const Timer = () => {
   const [timeInfo, setTimeInfo] = useState('00:00:00:00');
 
   const title = () => {
-    if (status === AirdropState.NOT_STARTED) return 'Airdrop starts in';
-    else if (status === AirdropState.OPEN) return 'Airdrop closes in';
-    else return 'Airdrop closed';
+    if (status === AirdropState.NOT_STARTED)
+      return `${airdropTitle} Airdrop starts in`;
+    else if (status === AirdropState.OPEN)
+      return `${airdropTitle} Airdrop closes in`;
+    else return `${airdropTitle} Airdrop closed`;
   };
 
   useEffect(() => {

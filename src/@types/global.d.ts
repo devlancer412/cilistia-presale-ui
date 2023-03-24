@@ -27,6 +27,7 @@ interface AppStatsContextType {
 }
 
 interface AirdropContextType {
+  airdropTitle: string;
   openingTime?: number;
   closingTime?: number;
   claimAmountPerWallet?: number;

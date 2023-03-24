@@ -93,10 +93,11 @@ export default function App({ Component, pageProps }: AppProps) {
           >
             <ContextProviders>
               <main className='flex flex-col min-h-screen overflow-hidden bg-gray-900'>
-                <Navbar />
+                {/* <Navbar /> */}
 
                 {/*  Page content */}
                 <div className='grow z-10'>
+                  <Navbar />
                   <Component {...pageProps} />
                 </div>
 
