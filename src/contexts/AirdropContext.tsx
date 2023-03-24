@@ -1,4 +1,4 @@
-import { createContext, FC, ReactNode, useCallback, useState } from 'react';
+import { createContext, FC, ReactNode, useCallback } from 'react';
 import { BigNumber } from 'ethers';
 import { NETWORK } from '@/constants';
 import {
@@ -9,9 +9,12 @@ import {
   useSigner,
 } from 'wagmi';
 
-import { contractConfig as airdropContractConfig } from '@/contracts/config/airdrop';
+import { contractConfig as ogAirdropContractConfig } from '@/contracts/config/ogAirdrop';
+
+import { contractConfig as trueOgAirdropContractConfig } from '@/contracts/config/ogAirdrop';
 import { formatUnits, splitSignature } from 'ethers/lib/utils.js';
 import { getAirdropSignature } from '@/utils/app';
+import { AirdropType } from '@/utils/api';
 import { toast } from 'react-hot-toast';
 import { bnToNumber } from '@/utils/math';
 
@@ -25,11 +28,33 @@ export const AirdropContext = createContext<AirdropContextType>(
   {} as AirdropContextType
 );
 
+function getAirdropTitle(type: AirdropType) {
+  if (type === AirdropType.OG) {
+    return 'OG';
+  }
+
+  if (type === AirdropType.TRUE_OG) {
+    return 'True OG';
+  }
+
+  return '';
+}
+
 type Props = {
   children: ReactNode;
 };
 
 const AirdropContextProvider: FC<Props> = ({ children }) => {
+  // @ts-ignore
+  const route = children?._owner?.pendingProps?.router?.state?.route as string;
+  const airdropType: AirdropType = route?.includes('/og')
+    ? AirdropType.OG
+    : AirdropType.TRUE_OG;
+
+  const airdropContractConfig =
+    airdropType === AirdropType.OG
+      ? ogAirdropContractConfig
+      : trueOgAirdropContractConfig;
   const { data: signer } = useSigner();
   const { address } = useAccount();
 
@@ -104,7 +129,7 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
     }
 
     try {
-      const signatureRes = await getAirdropSignature(address);
+      const signatureRes = await getAirdropSignature(address, airdropType);
 
       if (!signatureRes.result) {
         return;
@@ -122,7 +147,7 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
 
       throw Error(err?.message && err?.reason);
     }
-  }, [address, airdropContract]);
+  }, [address, airdropContract, airdropType]);
 
   useContractEvent({
     ...airdropContractConfig,
@@ -144,6 +169,7 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
   return (
     <AirdropContext.Provider
       value={{
+        airdropTitle: getAirdropTitle(airdropType),
         openingTime: data?.openingTime,
         closingTime: data?.closingTime,
         claimAmountPerWallet: data?.claimAmountPerWallet,
