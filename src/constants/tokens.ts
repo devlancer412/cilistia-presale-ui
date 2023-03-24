@@ -1,12 +1,12 @@
 const ACCEPTED_TOKENS_RECORDS: Record<number, Token[]> = {
   42161: [
     {
-      address: '0xEB590e5A96CD0E943A0899412E4fB06e0B362a7f',
+      address: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
       decimals: 6,
       symbol: 'USDC',
     },
     {
-      address: '0x94aD46632DDDF560b20bec57F6Aeed8AD9CF7561',
+      address: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
       decimals: 6,
       symbol: 'USDT',
     },
