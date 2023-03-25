@@ -97,9 +97,9 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
 
   return (
     <ModalWrapper title='Purchase Token' isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className='flex flex-col w-full items-center py-4 text-slate-200'>
+      <div className='flex flex-col items-center w-full py-4 text-slate-200'>
         <span className='mb-1'>Select token below:</span>
-        <div className='flex flex-row rounded-lg mb-3'>
+        <div className='flex flex-row mb-3 rounded-lg'>
           {ACCEPTED_TOKENS.map((token, index) => (
             <button
               key={token.symbol}
@@ -107,7 +107,7 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
                 index === ACCEPTED_TOKENS.length - 1 ? 'rounded-r-lg' : ''
               } ${
                 token.symbol === selectedToken.symbol
-                  ? 'bg-blue'
+                  ? 'bg-indigo-600'
                   : 'bg-slate-700'
               }`}
               onClick={() => setSelectedToken(token)}
@@ -120,7 +120,7 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
           <div className='flex justify-between'>
             <span className='text-sm'>Amount</span>
             <div className='flex flex-row items-end gap-1'>
-              <span className='text-md leading-5'>
+              <span className='leading-5 text-md'>
                 {formatAmountWithUnit(balance, 2)}
               </span>
               <button className='text-sm underline' onClick={handleMax}>
@@ -128,11 +128,11 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
               </button>
             </div>
           </div>
-          <div className='border-2 px-2 rounded-md bg-opacity-[0.06] bg-white'>
+          <div className='border-1 px-2 rounded bg-opacity-[0.06] bg-white'>
             <input
               value={amount}
               type='number'
-              className='focus:border-transparent focus:ring-0 p-2 bg-transparent border-0'
+              className='p-2 bg-transparent border-0 focus:border-transparent focus:ring-0'
               placeholder='0.0'
               onChange={(e) => setAmount(parseFloat(e.target.value) ?? 0)}
             />

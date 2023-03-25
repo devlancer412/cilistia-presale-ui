@@ -91,7 +91,7 @@ const Navbar = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <Link href="#" className="-m-1.5 p-1.5">
+          <Link href="/presale" className="-m-1.5 p-1.5">
             <span className="sr-only">Cilistia</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -127,9 +127,9 @@ const Navbar = () => {
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
             onClick={() => {
-              console.log('open sesame', mobileMenuOpen);
+              console.log("open sesame", mobileMenuOpen);
               setMobileMenuOpen(true);
-              console.log('close sesame', mobileMenuOpen);
+              console.log("close sesame", mobileMenuOpen);
             }}
           >
             <span className="sr-only">Open main menu</span>
@@ -165,7 +165,7 @@ const Navbar = () => {
         <div className="fixed inset-0 z-10" />
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full px-6 py-6 overflow-y-auto bg-gray-900 sm:max-w-sm sm:ring-1 sm:ring-white/10">
           <div className="flex items-center justify-between">
-            <Link href="#" className="-m-1.5 p-1.5">
+            <Link href="/presale" className="-m-1.5 p-1.5">
               <span className="sr-only">Cilistia</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

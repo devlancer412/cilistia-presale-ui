@@ -72,7 +72,7 @@ const AirdropInfo = () => {
             {claimAmountPerWallet
               ? `(${formatAmountWithUnit(
                   claimAmountPerWallet,
-                  6
+                  2
                 )}CIL Per Claim)`
               : '-'}
           </span>
