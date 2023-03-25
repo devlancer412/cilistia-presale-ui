@@ -1,15 +1,15 @@
-import { FC, useState } from 'react';
-import { ACCEPTED_TOKENS } from '@/constants';
-import ModalWrapper from './ModalWrapper';
+import { FC, useState } from "react";
+import { ACCEPTED_TOKENS } from "@/constants";
+import ModalWrapper from "./ModalWrapper";
 import {
   useCurrentTime,
   usePresale,
   usePresaleCountdown,
   usePurchaseToken,
-} from '@/hooks';
-import { PresaleState } from '@/contexts/PresaleContext';
-import { formatAmountWithUnit } from '@/utils/math';
-import { toast } from 'react-hot-toast';
+} from "@/hooks";
+import { PresaleState } from "@/contexts/PresaleContext";
+import { formatAmountWithUnit } from "@/utils/math";
+import { toast } from "react-hot-toast";
 
 function determinButtonText(
   allowance: number,
@@ -17,14 +17,14 @@ function determinButtonText(
   isWaiting: boolean
 ) {
   if (amount === 0) {
-    return 'Invalid Purchase Amount';
+    return "Invalid Purchase Amount";
   }
 
   if (allowance > 0 && allowance >= amount) {
-    return isWaiting ? 'Purchasing...' : 'Purchase';
+    return isWaiting ? "Purchasing..." : "Purchase";
   }
 
-  return isWaiting ? 'Approving...' : 'Approve';
+  return isWaiting ? "Approving..." : "Approve";
 }
 
 interface Props {
@@ -56,7 +56,7 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
       toast.dismiss(toastId);
       toast.success(`${selectedToken.symbol} approved for transaction`);
     } catch (err: any) {
-      const errorMsg = err?.reason ? err.reason : 'Approval failed';
+      const errorMsg = err?.reason ? err.reason : "Approval failed";
       toast.dismiss(toastId);
       toast.error(errorMsg);
     } finally {
@@ -77,9 +77,9 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
       const tx = await purchase(amount, selectedToken);
       await tx.wait();
       toast.dismiss(toastId);
-      toast.success('Purchase successful');
+      toast.success("Purchase successful");
     } catch (err: any) {
-      const errorMsg = err?.reason ? err.reason : 'Purchase failed';
+      const errorMsg = err?.reason ? err.reason : "Purchase failed";
       toast.dismiss(toastId);
       toast.error(errorMsg);
     } finally {
@@ -88,19 +88,19 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <ModalWrapper title='Purchase Token' isOpen={isOpen} setIsOpen={setIsOpen}>
-      <div className='flex flex-col w-full items-center py-4 text-slate-200'>
-        <span className='mb-1'>Select token below:</span>
-        <div className='flex flex-row rounded-lg mb-3'>
+    <ModalWrapper title="Purchase Token" isOpen={isOpen} setIsOpen={setIsOpen}>
+      <div className="flex flex-col items-center w-full py-4 text-slate-200">
+        <span className="mb-1">Select token below:</span>
+        <div className="flex flex-row mb-3 rounded-lg">
           {ACCEPTED_TOKENS.map((token, index) => (
             <button
               key={token.symbol}
-              className={`px-7 py-3 ${index === 0 ? 'rounded-l-lg' : ''} ${
-                index === ACCEPTED_TOKENS.length - 1 ? 'rounded-r-lg' : ''
+              className={`px-7 py-3 ${index === 0 ? "rounded-l-lg" : ""} ${
+                index === ACCEPTED_TOKENS.length - 1 ? "rounded-r-lg" : ""
               } ${
                 token.symbol === selectedToken.symbol
-                  ? 'bg-blue'
-                  : 'bg-slate-700'
+                  ? "bg-indigo-600"
+                  : "bg-slate-700"
               }`}
               onClick={() => setSelectedToken(token)}
             >
@@ -108,31 +108,31 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
             </button>
           ))}
         </div>
-        <div className='flex flex-col my-3'>
-          <div className='flex justify-between'>
-            <span className='text-sm'>Amount</span>
-            <div className='flex flex-row items-end gap-1'>
-              <span className='text-md leading-5'>
+        <div className="flex flex-col my-3">
+          <div className="flex justify-between">
+            <span className="text-sm">Amount</span>
+            <div className="flex flex-row items-end gap-1">
+              <span className="leading-5 text-md">
                 {formatAmountWithUnit(balance, 2)}
               </span>
-              <button className='text-sm underline' onClick={handleMax}>
+              <button className="text-sm underline" onClick={handleMax}>
                 Max
               </button>
             </div>
           </div>
-          <div className='border-2 px-2 rounded-md bg-opacity-[0.06] bg-white'>
+          <div className="border-1 px-2 rounded bg-opacity-[0.06] bg-white">
             <input
               value={amount}
-              type='number'
-              className='focus:border-transparent focus:ring-0 p-2 bg-transparent border-0'
-              placeholder='0.0'
+              type="number"
+              className="p-2 bg-transparent border-0 focus:border-transparent focus:ring-0"
+              placeholder="0.0"
               onChange={(e) => setAmount(parseFloat(e.target.value) ?? 0)}
             />
             <span>{selectedToken.symbol}</span>
           </div>
         </div>
         <button
-          className='bg-blue px-7 py-3 rounded-lg mt-2 disabled:opacity-50 disabled:cursor-not-allowed'
+          className="py-3 mt-2 bg-indigo-600 rounded-lg px-7 disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={status !== PresaleState.OPEN || isWaiting || !amount}
           onClick={
             allowance > 0 && allowance >= amount
