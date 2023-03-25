@@ -28,7 +28,7 @@ const PresaleInfo = () => {
         />
         <div className='absolute top-0 left-0 flex flex-col items-center justify-center w-full h-full p-4'>
           {sold && (
-            <span className='pb-2 text-3xl font-medium text-white'>
+            <span className='pb-2 text-5xl font-medium text-white'>
               {formatAmountWithUnit(sold as number, 2)}
             </span>
           )}
