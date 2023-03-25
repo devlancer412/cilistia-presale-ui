@@ -44,7 +44,7 @@ const ModalWrapper: FC<PropsWithChildren<Props>> = ({
                 <XMarkIcon className="w-6 h-6" aria-hidden="true" />
               </span>
             </Dialog.Title>
-            <div className="flex w-full h-px border border-gray-600 bg-slate-600" />
+            <div className="flex w-full h-px border-1 border-slate-800 bg-slate-600" />
             <Dialog.Description>{children}</Dialog.Description>
           </Dialog.Panel>
         </Transition.Child>
