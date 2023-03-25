@@ -20,6 +20,14 @@ function determinButtonText(
     return 'Invalid Purchase Amount';
   }
 
+  if (amount < 50) {
+    return 'Minimum amount is $50';
+  }
+
+  if (amount > 1000) {
+    return 'Maximum amount is $1000';
+  }
+
   if (allowance > 0 && allowance >= amount) {
     return isWaiting ? 'Purchasing...' : 'Purchase';
   }
@@ -133,7 +141,12 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
         </div>
         <button
           className='bg-blue px-7 py-3 rounded-lg mt-2 disabled:opacity-50 disabled:cursor-not-allowed'
-          disabled={status !== PresaleState.OPEN || isWaiting || !amount}
+          disabled={
+            status !== PresaleState.OPEN ||
+            isWaiting ||
+            amount > 1000 ||
+            amount < 50
+          }
           onClick={
             allowance > 0 && allowance >= amount
               ? handlePurchase
