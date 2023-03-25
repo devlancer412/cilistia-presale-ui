@@ -68,7 +68,7 @@ const PresaleContextProvider: FC<Props> = ({ children }) => {
         return {
           openingTime: rawOpeningTime,
           closingTime: rawClosingTime,
-          sold: HARD_CAP - bnToNumber(rawBalance) + 1194,
+          sold: HARD_CAP - bnToNumber(rawBalance) + 1247,
           price: bnToNumber(rawPrice, 2),
         };
       }
