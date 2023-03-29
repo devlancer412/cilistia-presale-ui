@@ -24,8 +24,8 @@ function determinButtonText(
     return 'Minimum amount is $25';
   }
 
-  if (amount > 1000) {
-    return 'Maximum amount is $1000';
+  if (amount > 2500) {
+    return 'Maximum amount is $2500';
   }
 
   if (allowance > 0 && allowance >= amount) {
@@ -103,13 +103,11 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
           {ACCEPTED_TOKENS.map((token, index) => (
             <button
               key={token.symbol}
-              className={`px-7 py-3 ${index === 0 ? 'rounded-l-lg' : ''} ${
-                index === ACCEPTED_TOKENS.length - 1 ? 'rounded-r-lg' : ''
-              } ${
-                token.symbol === selectedToken.symbol
+              className={`px-7 py-3 ${index === 0 ? 'rounded-l-lg' : ''} ${index === ACCEPTED_TOKENS.length - 1 ? 'rounded-r-lg' : ''
+                } ${token.symbol === selectedToken.symbol
                   ? 'bg-indigo-600'
                   : 'bg-slate-700'
-              }`}
+                }`}
               onClick={() => setSelectedToken(token)}
             >
               {token.symbol}
@@ -144,7 +142,7 @@ export const PurchaseModal: FC<Props> = ({ isOpen, setIsOpen }) => {
           disabled={
             status !== PresaleState.OPEN ||
             isWaiting ||
-            amount > 1000 ||
+            amount > 2500 ||
             amount < 25
           }
           onClick={

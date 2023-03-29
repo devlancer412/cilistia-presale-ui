@@ -149,7 +149,7 @@ const AirdropContextProvider: FC<Props> = ({ children }) => {
 
       const sign = splitSignature(signatureRes.signature!);
 
-      return airdropContract.claim({
+      return await airdropContract.claim({
         r: sign.r,
         s: sign.s,
         v: sign.v,
